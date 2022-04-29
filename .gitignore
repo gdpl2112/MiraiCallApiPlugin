@@ -3,6 +3,7 @@ bots
 config
 data
 plugins
+**/test
 
 ### Java template
 # Compiled class file
