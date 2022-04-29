@@ -36,6 +36,18 @@
 }
 ```
 
+$1 $2 即参数1 参数2 outArgs 指定返回的 数据为 参数N
+
+转换后内部通过转换成message
+
+- 图片格式 \<Pic:路径> 
+- At格式 \<At:QQ号> 
+- 语音格式 \<Audio:路径>
+
+
+见 [详情](https://github.com/gdpl2112/MiraiCallApiPlugin/blob/master/src/main/java/io/github/Kloping/mirai/p1/Parse.java#L11)
+ 
+
 配置后 在群聊使用 /callApi call 涩图 或在群聊/好友 发送 涩图 即可触发
 
 ### 复杂的返回参数
