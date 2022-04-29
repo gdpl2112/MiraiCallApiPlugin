@@ -38,13 +38,6 @@ public class CallApiPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
-    }
-
-    public static Conf conf = null;
-
-    @Override
-    public void onLoad(PluginComponentStorage storage) {
-        super.onLoad(storage);
         loadConf();
         CommandManager.INSTANCE.registerCommand(CommandLine0.INSTANCE, true);
         GlobalEventChannel.INSTANCE.registerListenerHost(new SimpleListenerHost() {
@@ -78,6 +71,13 @@ public class CallApiPlugin extends JavaPlugin {
                 onMessage0(event);
             }
         });
+    }
+
+    public static Conf conf = null;
+
+    @Override
+    public void onLoad(PluginComponentStorage storage) {
+        super.onLoad(storage);
     }
 
     public static void loadConf() {

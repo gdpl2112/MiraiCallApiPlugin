@@ -1,5 +1,7 @@
 ## 自定义 调用 API 插件
 
+[下载](https://github.com/gdpl2112/MiraiCallApiPlugin/releases)
+
 启动后生成配置文件
 
 ```json
