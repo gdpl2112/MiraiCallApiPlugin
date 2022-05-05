@@ -203,7 +203,7 @@
         "xingge"
       ],
       "touch": "QQ凶吉",
-      "url": "http://api.weijieyue.cn/api/qq/xiongji.php?qq=$1"
+      "url": "http://api.weijieyue.cn/api/qq/xiongji.php?qq=$qid"
     }
   ]
 }
