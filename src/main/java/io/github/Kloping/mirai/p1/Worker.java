@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.github.kloping.url.UrlUtils;
+import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.contact.Friend;
 import net.mamoe.mirai.contact.Group;
@@ -26,7 +27,7 @@ import static io.github.Kloping.mirai.p1.Parse.aStart;
  * @author github.kloping
  */
 public class Worker {
-    public static Message call(String text, Contact contact) {
+    public static Message call(String text, long gid, long qid) {
         try {
             Conf conf = CallApiPlugin.conf;
             String[] ss = text.split(conf.getSplitChar());
@@ -35,9 +36,9 @@ public class Worker {
                 if (template.touch.equals(first)) {
                     String[] ss0 = new String[ss.length - 1];
                     System.arraycopy(ss, 1, ss0, 0, ss0.length);
-                    Document document = doc(template.url, ss0);
+                    Document document = doc(gid, qid, template.url, ss0);
                     if (document == null) return null;
-                    return parse(document, template, contact);
+                    return parse(document, template, Bot.getInstances().get(0).getAsFriend(), gid, qid);
                 }
             }
         } catch (Exception e) {
@@ -46,7 +47,7 @@ public class Worker {
         return null;
     }
 
-    private static Message parse(Document document, CallTemplate template, Contact contact) {
+    private static Message parse(Document document, CallTemplate template, Contact contact, long gid, long qid) {
         String end = template.out;
         try {
             int i = 1;
@@ -54,6 +55,7 @@ public class Worker {
                 Object o0 = get(document.body().text(), outArg);
                 end = end.replace(String.format(CHAR0, i++), o0.toString());
             }
+            end = filterId(end, gid, qid);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getMessage());
@@ -97,11 +99,12 @@ public class Worker {
 
     public static final String CHAR0 = "$%s";
 
-    public static Document doc(String url, String... args) {
+    public static Document doc(long gid, long qid, String url, String... args) {
         int i = 1;
         for (String arg : args) {
             url = url.replace(String.format(CHAR0, i++), arg);
         }
+        url = filterId(url, gid, qid);
         try {
             return org.jsoup.Jsoup.connect(url).ignoreContentType(true).ignoreHttpErrors(true)
                     .header("Host", new URL(url).getHost())
@@ -112,6 +115,22 @@ public class Worker {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static final String QID = "$qid";
+    public static final String QID0 = "\\$qid";
+    public static final String GID = "$gid";
+    public static final String GID0 = "\\$gid";
+
+    private static String filterId(String url, long gid, long qid) {
+        if (url == null) return url;
+        if (url.contains(QID)) {
+            url = url.replaceAll(QID0, String.valueOf(qid));
+        }
+        if (url.contains(GID)) {
+            url = url.replaceAll(GID0, String.valueOf(gid));
+        }
+        return url;
     }
 
     private static final Map<Integer, Face> FACES = new ConcurrentHashMap<>();

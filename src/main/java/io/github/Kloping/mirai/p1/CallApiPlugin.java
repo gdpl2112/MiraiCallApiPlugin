@@ -27,7 +27,7 @@ public class CallApiPlugin extends JavaPlugin {
     public static final CallApiPlugin INSTANCE = new CallApiPlugin();
 
     public CallApiPlugin() {
-        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "1.0").info("调用自定义API插件").build());
+        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "1.1").info("调用自定义API插件").build());
     }
 
     @Override
@@ -58,7 +58,7 @@ public class CallApiPlugin extends JavaPlugin {
                     Message m = event.getMessage().get(1);
                     if (m instanceof PlainText) {
                         PlainText text = (PlainText) m;
-                        Message message = Worker.call(text.getContent(), event.getSubject());
+                        Message message = Worker.call(text.getContent(), event.getSubject().getId(), event.getSender().getId());
                         if (message != null) {
                             event.getSubject().sendMessage(message);
                         }
