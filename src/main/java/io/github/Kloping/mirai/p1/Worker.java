@@ -174,7 +174,7 @@ public class Worker {
                         break;
                 }
             } else {
-                builder.append(str.trim());
+                builder.append(str);
             }
         }
         return lls;
