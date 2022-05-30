@@ -12,10 +12,16 @@ import net.mamoe.mirai.message.data.*;
 import net.mamoe.mirai.utils.ExternalResource;
 import org.jsoup.nodes.Document;
 
+import javax.net.ssl.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +33,44 @@ import static io.github.Kloping.mirai.p1.Parse.aStart;
  * @author github.kloping
  */
 public class Worker {
+    static {
+        try {
+            SSLContext sslcontext = SSLContext.getInstance("SSL", "SunJSSE");
+            sslcontext.init(null, new TrustManager[]{new X509TrustManager() {
+                @Override
+                public void checkClientTrusted(X509Certificate[] certificates, String authType) throws CertificateException {
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] ax509certificate, String s) throws CertificateException {
+                }
+
+                @Override
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+            }}, new java.security.SecureRandom());
+
+
+            HostnameVerifier ignoreHostnameVerifier = new HostnameVerifier() {
+                @Override
+                public boolean verify(String s, SSLSession sslsession) {
+                    System.out.println("WARNING: Hostname is not matched for cert.");
+                    return true;
+                }
+            };
+
+            HttpsURLConnection.setDefaultHostnameVerifier(ignoreHostnameVerifier);
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslcontext.getSocketFactory());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Message call(String text, long gid, long qid) {
         try {
             Conf conf = CallApiPlugin.conf;

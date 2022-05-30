@@ -27,7 +27,7 @@ public class CallApiPlugin extends JavaPlugin {
     public static final CallApiPlugin INSTANCE = new CallApiPlugin();
 
     public CallApiPlugin() {
-        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "1.2").info("调用自定义API插件").build());
+        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "1.3").info("调用自定义API插件").build());
     }
 
     @Override
