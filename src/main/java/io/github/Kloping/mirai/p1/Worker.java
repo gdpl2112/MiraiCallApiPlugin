@@ -109,9 +109,10 @@ public class Worker {
                 end = end.replace(String.format(CHAR0, i++), o0.toString());
             }
             end = filterId(end, gid, qid);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
         } catch (Exception e) {
+            if (e instanceof NullPointerException) {
+                e.printStackTrace();
+            }
             if (template.err != null && !template.err.isEmpty()) {
                 end = template.err;
             } else {
