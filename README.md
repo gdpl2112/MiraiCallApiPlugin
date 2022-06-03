@@ -32,7 +32,8 @@
         "pic"
       ],
       "touch": "涩图",
-      "url": "http://iw233.fgimax2.fgnwctvip.com/API/Ghs.php?type=json"
+      "url": "http://iw233.fgimax2.fgnwctvip.com/API/Ghs.php?type=json",
+      "err": "涩图调用失败"
     }
   ]
 }
@@ -135,7 +136,8 @@
         "data.forecast[2].type"
       ],
       "touch": "未来天气",
-      "url": "https://api.vvhan.com/api/weather?city=$1&type=week"
+      "url": "https://api.vvhan.com/api/weather?city=$1&type=week",
+      "err": "天气查询失败"
     }
   ]
 }
@@ -163,7 +165,8 @@
         "pic"
       ],
       "touch": "涩图",
-      "url": "http://iw233.fgimax2.fgnwctvip.com/API/Ghs.php?type=json"
+      "url": "http://iw233.fgimax2.fgnwctvip.com/API/Ghs.php?type=json",
+      "err": "涩图调用失败"
     },
     {
       "out": "$1",
@@ -171,7 +174,8 @@
         "data"
       ],
       "touch": "星座运势",
-      "url": "https://api.iyk0.com/xzys/?msg=$1"
+      "url": "https://api.iyk0.com/xzys/?msg=$1",
+      "err": "星座运势调用失败"
     },
     {
       "out": "$1:$2\n$3:$4\n$5:$6\n",
@@ -184,7 +188,8 @@
         "data.forecast[2].type"
       ],
       "touch": "未来天气",
-      "url": "https://api.vvhan.com/api/weather?city=$1&type=week"
+      "url": "https://api.vvhan.com/api/weather?city=$1&type=week",
+      "err": "未来天气查询失败"
     },
     {
       "out": "<Audio:$1>",
@@ -192,7 +197,8 @@
         "mp3"
       ],
       "touch": "小妲己",
-      "url": "http://api.weijieyue.cn/api/xiaodaji/api.php?msg=$1"
+      "url": "http://api.weijieyue.cn/api/xiaodaji/api.php?msg=$1",
+      "err": "调用失败"
     },
     {
       "out": "QQ:$1\n评语:$2\n凶吉:$3\n性格:$4",
@@ -203,7 +209,8 @@
         "xingge"
       ],
       "touch": "QQ凶吉",
-      "url": "http://api.weijieyue.cn/api/qq/xiongji.php?qq=$qid"
+      "url": "http://api.weijieyue.cn/api/qq/xiongji.php?qq=$qid",
+      "err": "调用失败"
     }
   ]
 }

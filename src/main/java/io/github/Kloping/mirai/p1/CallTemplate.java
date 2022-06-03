@@ -8,6 +8,7 @@ public class CallTemplate {
     public String url;
     public String out;
     public String[] outArgs;
+    public String err;
 
     public String[] getOutArgs() {
         return outArgs;
@@ -39,5 +40,14 @@ public class CallTemplate {
 
     public void setOut(String out) {
         this.out = out;
+    }
+
+    public String getErr() {
+        if (err == null) return "";
+        return err;
+    }
+
+    public void setErr(String err) {
+        this.err = err;
     }
 }

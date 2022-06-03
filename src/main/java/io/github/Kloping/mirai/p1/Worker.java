@@ -33,6 +33,16 @@ import static io.github.Kloping.mirai.p1.Parse.aStart;
  * @author github.kloping
  */
 public class Worker {
+    public static final String QID = "$qid";
+    public static final String QID0 = "\\$qid";
+    public static final String GID = "$gid";
+    public static final String GID0 = "\\$gid";
+    public static final String CHAR0 = "$%s";
+
+    private static final Map<Integer, Face> FACES = new ConcurrentHashMap<>();
+    private static final Map<Long, At> ATS = new ConcurrentHashMap<>();
+    private static final Map<String, Image> HIST_IMAGES = new ConcurrentHashMap<>();
+
     static {
         try {
             SSLContext sslcontext = SSLContext.getInstance("SSL", "SunJSSE");
@@ -50,7 +60,6 @@ public class Worker {
                     return null;
                 }
             }}, new java.security.SecureRandom());
-
 
             HostnameVerifier ignoreHostnameVerifier = new HostnameVerifier() {
                 @Override
@@ -101,13 +110,17 @@ public class Worker {
             }
             end = filterId(end, gid, qid);
         } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println(e.getMessage());
+//            e.printStackTrace();
+            if (template.err != null && !template.err.isEmpty()) {
+                end = template.err;
+            } else {
+                end = "调用失败";
+            }
         }
         return getMessageFromString(end, contact);
     }
 
-    private static Object get(String t1, String t0) {
+    private static Object get(String t1, String t0) throws Exception {
         JSON j0 = (JSON) JSON.parse(t1);
         String s0 = t0.split("\\.")[0];
         Object o = null;
@@ -141,8 +154,6 @@ public class Worker {
         }
     }
 
-    public static final String CHAR0 = "$%s";
-
     public static Document doc(long gid, long qid, String url, String... args) {
         int i = 1;
         for (String arg : args) {
@@ -161,11 +172,6 @@ public class Worker {
         return null;
     }
 
-    public static final String QID = "$qid";
-    public static final String QID0 = "\\$qid";
-    public static final String GID = "$gid";
-    public static final String GID0 = "\\$gid";
-
     private static String filterId(String url, long gid, long qid) {
         if (url == null) return url;
         if (url.contains(QID)) {
@@ -176,10 +182,6 @@ public class Worker {
         }
         return url;
     }
-
-    private static final Map<Integer, Face> FACES = new ConcurrentHashMap<>();
-    private static final Map<Long, At> ATS = new ConcurrentHashMap<>();
-    private static final Map<String, Image> HIST_IMAGES = new ConcurrentHashMap<>();
 
     public static MessageChain getMessageFromString(String str, Contact group) {
         if (str == null || str.isEmpty() || group == null) return null;
