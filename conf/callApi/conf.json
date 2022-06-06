@@ -71,6 +71,14 @@
       ],
       "touch": "随机图片",
       "url": "http://api.iw233.cn/api.php?sort=cat&type=json"
+    },
+    {
+      "out": "<Pic:$1>",
+      "outArgs": [
+        "$url"
+      ],
+      "touch": "需要我吗",
+      "url": "https://ovooa.com/API/face_need/?QQ=$qid"
     }
   ]
 }

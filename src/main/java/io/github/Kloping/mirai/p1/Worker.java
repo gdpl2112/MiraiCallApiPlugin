@@ -5,8 +5,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.contact.Contact;
-import net.mamoe.mirai.message.data.At;
-import net.mamoe.mirai.message.data.Face;
 import net.mamoe.mirai.message.data.Message;
 import net.mamoe.mirai.message.data.PlainText;
 import org.jsoup.Connection;
@@ -20,8 +18,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static io.github.Kloping.mirai.p1.CallApiPlugin.conf;
 import static io.github.Kloping.mirai.p1.Parse.getMessageFromString;
@@ -37,6 +33,7 @@ public class Worker {
     public static final String CHAR0 = "$%s";
     public static final String ALL = "$all";
     public static final String PAR_URL = "$url";
+    public static final String PAR_URL0 = "\\$url";
 
     static {
         try {
@@ -101,11 +98,11 @@ public class Worker {
         try {
             int i = 1;
             for (String outArg : template.outArgs) {
-                Object o0 = get(document.body().text(), outArg);
-                end = end.replace(String.format(CHAR0, i++), o0.toString());
+                Object o0 = get(document, outArg);
+                if (o0 != null)
+                    end = end.replace(String.format(CHAR0, i++), o0.toString());
             }
             end = filterId(end, gid, qid);
-            end = filterUrl(end, document);
         } catch (Exception e) {
             if (e instanceof NullPointerException) {
                 e.printStackTrace();
@@ -140,16 +137,13 @@ public class Worker {
         return url;
     }
 
-    private static String filterUrl(String url, Document document) {
-        if (url == null) return url;
-        if (url.contains(PAR_URL)) {
-            url = url.replaceAll(PAR_URL, document.location());
-        }
-        return url;
+    private static Object get(Document t1, String t0) throws Exception {
+        if (t0.equals(ALL)) return t1;
+        if (t0.equals(PAR_URL)) return t1.location();
+        return get0(t1.body().text(), t0);
     }
 
-    private static Object get(String t1, String t0) throws Exception {
-        if (t0.equals(ALL)) return t1;
+    private static Object get0(String t1, String t0) throws Exception {
         JSON j0 = (JSON) JSON.parse(t1);
         String s0 = t0.split("\\.")[0];
         Object o = null;
@@ -177,7 +171,7 @@ public class Worker {
             else t0 = t0.substring(len - 1);
         }
         if (t0.length() > 0) {
-            return get(JSON.toJSONString(o), t0);
+            return get0(JSON.toJSONString(o), t0);
         } else {
             return o;
         }
