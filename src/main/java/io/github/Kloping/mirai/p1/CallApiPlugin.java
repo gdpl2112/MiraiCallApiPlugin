@@ -26,8 +26,10 @@ public class CallApiPlugin extends JavaPlugin {
 
     public static final CallApiPlugin INSTANCE = new CallApiPlugin();
 
+    public static Conf conf = null;
+
     public CallApiPlugin() {
-        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "1.6").info("调用自定义API插件").build());
+        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "1.7").info("调用自定义API插件").build());
     }
 
     @Override
@@ -72,8 +74,6 @@ public class CallApiPlugin extends JavaPlugin {
             }
         });
     }
-
-    public static Conf conf = null;
 
     @Override
     public void onLoad(PluginComponentStorage storage) {
