@@ -40,6 +40,7 @@ public class Worker {
     public static final String GID = "$gid";
     public static final String GID0 = "\\$gid";
     public static final String CHAR0 = "$%s";
+    public static final String ALL = "$all";
 
     private static final Map<Integer, Face> FACES = new ConcurrentHashMap<>();
     private static final Map<Long, At> ATS = new ConcurrentHashMap<>();
@@ -125,6 +126,7 @@ public class Worker {
     }
 
     private static Object get(String t1, String t0) throws Exception {
+        if (t0.equals(ALL)) return t1;
         JSON j0 = (JSON) JSON.parse(t1);
         String s0 = t0.split("\\.")[0];
         Object o = null;
@@ -174,7 +176,7 @@ public class Worker {
             if (template.getProxyIp() != null && template.getProxyPort() != null && !template.getProxyIp().isEmpty()) {
                 connection.proxy(template.getProxyIp(), template.getProxyPort());
             } else if (conf.getProxyIp() != null && conf.getProxyPort() != null && !conf.getProxyIp().isEmpty()) {
-                connection.proxy(template.getProxyIp(), template.getProxyPort());
+                connection.proxy(conf.getProxyIp(), conf.getProxyPort());
             }
             return connection.get();
         } catch (IOException e) {

@@ -18,6 +18,14 @@
     {
       "out": "$1",
       "outArgs": [
+        "$all"
+      ],
+      "touch": "我在人间凑数的日子",
+      "url": "https://api.iyk0.com/renjian/"
+    },
+    {
+      "out": "$1",
+      "outArgs": [
         "data"
       ],
       "touch": "星座运势",
