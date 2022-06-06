@@ -10,6 +10,7 @@ import net.mamoe.mirai.contact.Friend;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.message.data.*;
 import net.mamoe.mirai.utils.ExternalResource;
+import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 
 import javax.net.ssl.*;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static io.github.Kloping.mirai.p1.CallApiPlugin.conf;
 import static io.github.Kloping.mirai.p1.Parse.aStart;
 
 /**
@@ -89,7 +91,7 @@ public class Worker {
                 if (template.touch.equals(first)) {
                     String[] ss0 = new String[ss.length - 1];
                     System.arraycopy(ss, 1, ss0, 0, ss0.length);
-                    Document document = doc(gid, qid, template.url, ss0);
+                    Document document = doc(gid, qid, template, ss0);
                     if (document == null) return null;
                     return parse(document, template, Bot.getInstances().get(0).getAsFriend(), gid, qid);
                 }
@@ -156,18 +158,25 @@ public class Worker {
         }
     }
 
-    public static Document doc(long gid, long qid, String url, String... args) {
+    public static Document doc(long gid, long qid, CallTemplate template, String... args) {
         int i = 1;
+        String url = template.url;
         for (String arg : args) {
             url = url.replace(String.format(CHAR0, i++), arg);
         }
         url = filterId(url, gid, qid);
         try {
-            return org.jsoup.Jsoup.connect(url).ignoreContentType(true).ignoreHttpErrors(true)
+            Connection connection = org.jsoup.Jsoup.connect(url).ignoreContentType(true).ignoreHttpErrors(true)
                     .header("Host", new URL(url).getHost())
                     .userAgent(
                             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36 Edg/100.0.1185.50"
-                    ).get();
+                    );
+            if (template.getProxyIp() != null && template.getProxyPort() != null && !template.getProxyIp().isEmpty()) {
+                connection.proxy(template.getProxyIp(), template.getProxyPort());
+            } else if (conf.getProxyIp() != null && conf.getProxyPort() != null && !conf.getProxyIp().isEmpty()) {
+                connection.proxy(template.getProxyIp(), template.getProxyPort());
+            }
+            return connection.get();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -9,6 +9,24 @@ public class CallTemplate {
     public String out;
     public String[] outArgs;
     public String err;
+    private String proxyIp;
+    private Integer proxyPort;
+
+    public String getProxyIp() {
+        return proxyIp;
+    }
+
+    public void setProxyIp(String proxyIp) {
+        this.proxyIp = proxyIp;
+    }
+
+    public Integer getProxyPort() {
+        return proxyPort;
+    }
+
+    public void setProxyPort(Integer proxyPort) {
+        this.proxyPort = proxyPort;
+    }
 
     public String[] getOutArgs() {
         return outArgs;

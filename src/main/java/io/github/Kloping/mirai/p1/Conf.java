@@ -12,6 +12,24 @@ public class Conf {
     private String splitChar = " ";
     private String permType = ALL;
     private List<CallTemplate> templates = new ArrayList<>();
+    private String proxyIp;
+    private Integer proxyPort;
+
+    public String getProxyIp() {
+        return proxyIp;
+    }
+
+    public void setProxyIp(String proxyIp) {
+        this.proxyIp = proxyIp;
+    }
+
+    public Integer getProxyPort() {
+        return proxyPort;
+    }
+
+    public void setProxyPort(Integer proxyPort) {
+        this.proxyPort = proxyPort;
+    }
 
     public String getSplitChar() {
         return splitChar;
