@@ -104,6 +104,7 @@ public class Worker {
     }
 
     private static Message parse(Document document, CallTemplate template, Contact contact, long gid, long qid) {
+        Message message = null;
         String end = template.out;
         try {
             int i = 1;
@@ -122,7 +123,17 @@ public class Worker {
                 end = "调用失败";
             }
         }
-        return getMessageFromString(end, contact);
+        try {
+            message = getMessageFromString(end, contact);
+        } catch (Exception e) {
+            if (template.err != null && !template.err.isEmpty()) {
+                end = template.err;
+            } else {
+                end = "调用失败";
+            }
+            message = new PlainText(end);
+        }
+        return message;
     }
 
     private static Object get(String t1, String t0) throws Exception {
