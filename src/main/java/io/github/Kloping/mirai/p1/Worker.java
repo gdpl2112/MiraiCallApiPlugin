@@ -116,6 +116,7 @@ public class Worker {
         try {
             message = getMessageFromString(end, contact);
         } catch (Exception e) {
+            e.printStackTrace();
             if (template.err != null && !template.err.isEmpty()) {
                 end = template.err;
             } else {
@@ -138,7 +139,7 @@ public class Worker {
     }
 
     private static Object get(Document t1, String t0) throws Exception {
-        if (t0.equals(ALL)) return t1;
+        if (t0.equals(ALL)) return t1.body().text();
         if (t0.equals(PAR_URL)) return t1.location();
         return get0(t1.body().text(), t0);
     }
