@@ -64,6 +64,7 @@ public class Worker {
         } catch (KeyManagementException e) {
             e.printStackTrace();
         }
+        StarterApplication.SCAN_LOADER = Worker.class.getClassLoader();
         TomcatConfig.getDEFAULT().setPort(conf.getPort());
         StarterApplication.run(Worker.class);
         StarterApplication.logger.info("服务启动成功 请访问 http://localhost:" + conf.getPort() + "/?key=" + conf.getPasswd());
