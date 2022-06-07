@@ -91,16 +91,6 @@ public class Parse {
         }
     }
 
-    public static List<Long> parseToLongList(String s0) {
-        if (s0 == null) return new ArrayList<>();
-        List<Long> set = new ArrayList<>();
-        for (String s : s0.split(",")) {
-            if (s.trim().isEmpty()) continue;
-            set.add(Long.parseLong(s.trim()));
-        }
-        return set;
-    }
-
     public static MessageChain getMessageFromString(String str, Contact group) {
         if (str == null || str.isEmpty() || group == null) return null;
         MessageChainBuilder builder = new MessageChainBuilder();

@@ -1,37 +1,45 @@
 {
   "permType": "all",
+  "port": 20042,
+  "proxyIp": "",
+  "proxyPort": 0,
   "splitChar": " ",
-  "proxyIp": "localhost",
-  "proxyPort": 20032,
   "templates": [
     {
+      "err": "涩图调用失败",
       "out": "<Pic:$1>",
       "outArgs": [
         "pic"
       ],
+      "proxyIp": "",
+      "proxyPort": 0,
       "touch": "涩图",
-      "url": "http://iw233.fgimax2.fgnwctvip.com/API/Ghs.php?type=json",
-      "err": "涩图调用失败",
-      "proxyIp": "localhost",
-      "proxyPort": 20032
+      "url": "http://iw233.fgimax2.fgnwctvip.com/API/Ghs.php?type=json"
     },
     {
+      "err": null,
       "out": "$1",
       "outArgs": [
         "$all"
       ],
+      "proxyIp": "",
+      "proxyPort": 0,
       "touch": "我在人间凑数的日子",
       "url": "https://api.iyk0.com/renjian/"
     },
     {
+      "err": null,
       "out": "$1",
       "outArgs": [
         "data"
       ],
+      "proxyIp": "",
+      "proxyPort": 0,
       "touch": "星座运势",
       "url": "https://api.iyk0.com/xzys/?msg=$1"
     },
     {
+      "err": "天气查询失败",
       "out": "<At:$qid>\n$1:$2\n$3:$4\n$5:$6\n",
       "outArgs": [
         "data.forecast[0].date",
@@ -41,19 +49,24 @@
         "data.forecast[2].date",
         "data.forecast[2].type"
       ],
+      "proxyIp": "",
+      "proxyPort": 0,
       "touch": "未来天气",
-      "url": "https://api.vvhan.com/api/weather?city=$1&type=week",
-      "err": "天气查询失败"
+      "url": "https://api.vvhan.com/api/weather?city=$1&type=week"
     },
     {
+      "err": null,
       "out": "<Audio:$1>",
       "outArgs": [
         "mp3"
       ],
+      "proxyIp": "",
+      "proxyPort": 0,
       "touch": "小妲己",
       "url": "http://api.weijieyue.cn/api/xiaodaji/api.php?msg=$1"
     },
     {
+      "err": null,
       "out": "QQ:$1\n评语:$2\n凶吉:$3\n性格:$4",
       "outArgs": [
         "qq",
@@ -61,24 +74,51 @@
         "xiongji",
         "xingge"
       ],
+      "proxyIp": "",
+      "proxyPort": 0,
       "touch": "QQ凶吉",
       "url": "http://api.weijieyue.cn/api/qq/xiongji.php?qq=$qid"
     },
     {
+      "err": null,
       "out": "<Pic:$1>",
       "outArgs": [
         "pic[0]"
       ],
+      "proxyIp": "",
+      "proxyPort": 0,
       "touch": "随机图片",
       "url": "http://api.iw233.cn/api.php?sort=cat&type=json"
+    },
+    {
+      "err": null,
+      "out": "<Pic:$1>",
+      "outArgs": [
+        "$url"
+      ],
+      "proxyIp": "",
+      "proxyPort": 0,
+      "touch": "需要我吗",
+      "url": "https://ovooa.com/API/face_need/?QQ=$qid"
+    },
+    {
+      "err": null,
+      "out": "<Pic:$1>",
+      "outArgs": [
+        "$url"
+      ],
+      "proxyIp": "",
+      "proxyPort": 0,
+      "touch": "pa",
+      "url": "http://api.weijieyue.cn/api/tupian/pa.php?qq=$qid"
     },
     {
       "out": "<Pic:$1>",
       "outArgs": [
         "$url"
       ],
-      "touch": "需要我吗",
-      "url": "https://ovooa.com/API/face_need/?QQ=$qid"
+      "touch": "需要ta吗",
+      "url": "https://ovooa.com/API/face_need/?QQ=$number"
     }
   ]
 }

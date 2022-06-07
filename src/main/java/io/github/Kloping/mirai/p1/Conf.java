@@ -14,6 +14,24 @@ public class Conf {
     private List<CallTemplate> templates = new ArrayList<>();
     private String proxyIp;
     private Integer proxyPort;
+    private Integer port = 20042;
+    private String passwd = "123456";
+
+    public String getPasswd() {
+        return passwd;
+    }
+
+    public void setPasswd(String passwd) {
+        this.passwd = passwd;
+    }
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public void setPort(Integer port) {
+        this.port = port;
+    }
 
     public String getProxyIp() {
         return proxyIp;

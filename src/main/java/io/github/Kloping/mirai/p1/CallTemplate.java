@@ -13,6 +13,7 @@ public class CallTemplate {
     private Integer proxyPort;
 
     public String getProxyIp() {
+        if (proxyIp == null) return "";
         return proxyIp;
     }
 
@@ -21,6 +22,7 @@ public class CallTemplate {
     }
 
     public Integer getProxyPort() {
+        if (proxyPort == null) return 0;
         return proxyPort;
     }
 
@@ -61,7 +63,6 @@ public class CallTemplate {
     }
 
     public String getErr() {
-        if (err == null) return "";
         return err;
     }
 
