@@ -96,6 +96,7 @@ public class CallApiPlugin extends JavaPlugin {
         CONF_FILE = new File(path, "conf/callApi/conf.json");
         CONF_FILE.getParentFile().mkdirs();
         conf = FileInitializeValue.getValue(CONF_FILE.getAbsolutePath(), conf, true);
+        conf = FileInitializeValue.putValues(CONF_FILE.getAbsolutePath(), conf, true);
         Worker.init();
     }
 }
