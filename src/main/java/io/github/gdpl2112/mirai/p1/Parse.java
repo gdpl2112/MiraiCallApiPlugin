@@ -1,4 +1,4 @@
-package io.github.Kloping.mirai.p1;
+package io.github.gdpl2112.mirai.p1;
 
 import io.github.kloping.url.UrlUtils;
 import net.mamoe.mirai.contact.Contact;

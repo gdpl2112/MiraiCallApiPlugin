@@ -1,9 +1,8 @@
-package io.github.Kloping.mirai.p1;
+package io.github.gdpl2112.mirai.p1;
 
 import io.github.kloping.MySpringTool.StarterApplication;
 import io.github.kloping.MySpringTool.StarterObjectApplication;
 import io.github.kloping.MySpringTool.annotations.CommentScan;
-import io.github.kloping.little_web.WebExtension;
 import io.github.kloping.little_web.conf.TomcatConfig;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.contact.Contact;
@@ -21,17 +20,20 @@ import java.security.NoSuchProviderException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
-import static io.github.Kloping.mirai.p1.CallApiPlugin.conf;
-import static io.github.Kloping.mirai.p1.Converter.*;
-import static io.github.Kloping.mirai.p1.Parse.getMessageFromString;
+import static io.github.gdpl2112.mirai.p1.CallApiPlugin.conf;
+import static io.github.gdpl2112.mirai.p1.Converter.*;
+import static io.github.gdpl2112.mirai.p1.Parse.getMessageFromString;
 
 /**
  * @author github.kloping
  */
-@CommentScan(path = "io.github.Kloping.mirai.p1.rest")
+@CommentScan(path = "io.github.gdpl2112.mirai.p1.rest")
 public class Worker {
+    public static boolean inited = false;
 
     static void init() {
+        if (inited) return;
+        inited = true;
         try {
             SSLContext sslcontext = SSLContext.getInstance("SSL", "SunJSSE");
             sslcontext.init(null, new TrustManager[]{new X509TrustManager() {

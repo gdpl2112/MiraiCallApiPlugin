@@ -1,4 +1,4 @@
-package io.github.Kloping.mirai.p1;
+package io.github.gdpl2112.mirai.p1;
 
 import io.github.kloping.initialize.FileInitializeValue;
 import kotlin.coroutines.CoroutineContext;
