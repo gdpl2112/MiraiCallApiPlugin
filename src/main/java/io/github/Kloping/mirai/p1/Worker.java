@@ -1,7 +1,9 @@
 package io.github.Kloping.mirai.p1;
 
 import io.github.kloping.MySpringTool.StarterApplication;
+import io.github.kloping.MySpringTool.StarterObjectApplication;
 import io.github.kloping.MySpringTool.annotations.CommentScan;
+import io.github.kloping.little_web.WebExtension;
 import io.github.kloping.little_web.conf.TomcatConfig;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.contact.Contact;
@@ -64,10 +66,12 @@ public class Worker {
         } catch (KeyManagementException e) {
             e.printStackTrace();
         }
-        StarterApplication.SCAN_LOADER = Worker.class.getClassLoader();
         TomcatConfig.getDEFAULT().setPort(conf.getPort());
-        StarterApplication.run(Worker.class);
-        StarterApplication.logger.info("服务启动成功 请访问 http://localhost:" + conf.getPort() + "/?key=" + conf.getPasswd());
+        StarterObjectApplication application = new StarterObjectApplication();
+        application.SCAN_LOADER = Worker.class.getClassLoader();
+        StarterApplication.logger = application.logger;
+        application.run0(Worker.class);
+        application.logger.info("服务启动成功 请访问 http://localhost:" + conf.getPort() + "/?key=" + conf.getPasswd());
     }
 
     public static Message call(String text, long gid, long qid) {

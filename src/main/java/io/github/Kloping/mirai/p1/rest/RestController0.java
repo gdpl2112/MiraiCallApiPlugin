@@ -20,6 +20,9 @@ import static io.github.Kloping.mirai.p1.CallApiPlugin.conf;
  */
 @WebRestController
 public class RestController0 {
+    public RestController0() {
+        System.out.println(getClass().getSimpleName()+"=>created");
+    }
 
     private boolean verify(HttpServletRequest request) {
         if (request.getCookies() == null) {
