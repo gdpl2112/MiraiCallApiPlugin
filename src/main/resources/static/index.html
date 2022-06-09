@@ -100,14 +100,20 @@
         let e_url = $("#inputGroup-url").next();
         let e_proxy = $("#inputGroup-proxy").next();
 
-        let url = "/append?out=" + e_out.val()
-                + "&outArgs=" + e_outArgs.val()
-                + "&touch=" + e_touch.val()
-                + "&url=" + e_url.val()
-                + "&proxy=" + e_proxy.val()
+        let v1 = encodeURIComponent(e_out.val())
+        let v2 = encodeURIComponent(e_outArgs.val())
+        let v3 = encodeURIComponent(e_touch.val())
+        let v4 = encodeURIComponent(e_url.val())
+        let v5 = encodeURIComponent(e_proxy.val())
+
+        let url = "/append?out=" + v1
+                + "&outArgs=" + v2
+                + "&touch=" + v3
+                + "&url=" + v4
+                + "&proxy=" + v5
         ;
 
-        axios.get(url).then(function (response) {
+        axios.post(url).then(function (response) {
             vm1.data = response.data;
             e_out.val("")
             e_outArgs.val("")
