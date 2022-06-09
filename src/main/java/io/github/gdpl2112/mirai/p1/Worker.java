@@ -68,9 +68,15 @@ public class Worker {
         } catch (KeyManagementException e) {
             e.printStackTrace();
         }
-        TomcatConfig.getDEFAULT().setPort(conf.getPort());
+        TomcatConfig config = new TomcatConfig();
+        config.setName("callApi-web");
+        config.setPort(conf.getPort());
         StarterObjectApplication application = new StarterObjectApplication();
         application.SCAN_LOADER = Worker.class.getClassLoader();
+        application.PRE_SCAN_RUNNABLE.add(() -> {
+            application.INSTANCE.getContextManager().append(config);
+            application.INSTANCE.getContextManager().append("callApi-servlet0", "servletName");
+        });
         StarterApplication.logger = application.logger;
         application.run0(Worker.class);
         application.logger.info("服务启动成功 请访问 http://localhost:" + conf.getPort() + "/?key=" + conf.getPasswd());
