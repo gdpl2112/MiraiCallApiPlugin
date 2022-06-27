@@ -95,6 +95,15 @@
 			"proxyPort":0,
 			"touch":"需要ta吗",
 			"url":"https://ovooa.com/API/face_need/?QQ=$number"
+		},
+		{
+			"err":null,
+			"out":"<Pic:$1>",
+			"outArgs":["$url"],
+			"proxyIp":"",
+			"proxyPort":0,
+			"touch":"展示",
+			"url":"https://xiaobapi.top/api/xb/api/bqb_8.php?qq=$number"
 		}
 	]
 }

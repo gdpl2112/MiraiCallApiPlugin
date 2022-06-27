@@ -1,5 +1,6 @@
 package io.github.gdpl2112.mirai.p1;
 
+import io.github.kloping.io.ReadUtils;
 import io.github.kloping.url.UrlUtils;
 import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.contact.Friend;
@@ -158,7 +159,7 @@ public class Parse {
         Image image = null;
         try {
             if (path.startsWith("http")) {
-                image = Contact.uploadImage(group, new URL(path).openStream());
+                image = Contact.uploadImage(group, new ByteArrayInputStream(ReadUtils.readAll(new URL(path).openStream())));
             } else if (path.startsWith("{")) {
                 image = Image.fromId(path);
             } else if (path.contains(BASE64)) {
