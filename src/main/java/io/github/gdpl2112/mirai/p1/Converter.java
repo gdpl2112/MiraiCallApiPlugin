@@ -52,7 +52,8 @@ public class Converter {
 
     public static Object get0(String t1, String t0) throws Exception {
         JSON j0 = (JSON) JSON.parse(t1);
-        String s0 = t0.split("\\.")[0];
+        t0 = t0.trim();
+        String s0 = t0.trim().split("\\.")[0].trim();
         Object o = null;
         if (s0.matches("\\[\\d+]")) {
             Integer st = Integer.parseInt(s0.substring(1, s0.length() - 1));
@@ -63,6 +64,7 @@ public class Converter {
             else t0 = t0.substring(len - 1);
         } else if (s0.matches(".*?\\[\\d+]")) {
             int i = s0.indexOf("[");
+            int i1 = s0.indexOf("]");
             String st0 = s0.substring(0, i);
             Integer st = Integer.parseInt(s0.substring(i + 1, s0.length() - 1));
             JSONObject jo = (JSONObject) j0;
