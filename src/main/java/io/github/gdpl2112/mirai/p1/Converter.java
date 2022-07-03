@@ -54,14 +54,14 @@ public class Converter {
         JSON j0 = (JSON) JSON.parse(t1);
         String s0 = t0.split("\\.")[0];
         Object o = null;
-        if (s0.matches("\\[\\d]")) {
+        if (s0.matches("\\[\\d+]")) {
             Integer st = Integer.parseInt(s0.substring(1, s0.length() - 1));
             JSONArray arr = (JSONArray) j0;
             o = arr.get(st);
             int len = 4;
             if (t0.length() >= len) t0 = t0.substring(len);
             else t0 = t0.substring(len - 1);
-        } else if (s0.matches(".*?\\[\\d]")) {
+        } else if (s0.matches(".*?\\[\\d+]")) {
             int i = s0.indexOf("[");
             String st0 = s0.substring(0, i);
             Integer st = Integer.parseInt(s0.substring(i + 1, s0.length() - 1));
