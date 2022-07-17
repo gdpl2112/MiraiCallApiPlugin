@@ -31,4 +31,17 @@ class CommandLine0 private constructor() : JCompositeCommand(CallApiPlugin.INSTA
             sendMessage(m)
         }
     }
+
+    @Description("开关某一API")
+    @SubCommand("switch")
+    suspend fun CommandSender.switchApi(@Name("触发词") str: String) {
+        for (template in CallApiPlugin.conf.templates) {
+            if (template.touch.equals(str.trim())) {
+                template.reverseSw()
+                sendMessage("\"${template.touch}\"目前处于\"${template.sw}\"状态")
+                return
+            }
+        }
+        sendMessage("未发现该API")
+    }
 }

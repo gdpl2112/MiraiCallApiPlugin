@@ -89,6 +89,7 @@ public class Worker {
             String first = ss[0];
             for (CallTemplate template : conf.getTemplates()) {
                 if (template.touch.equals(first)) {
+                    if (!template.sw) continue;
                     String[] ss0 = new String[ss.length - 1];
                     System.arraycopy(ss, 1, ss0, 0, ss0.length);
                     Document document = doc(gid, qid, template, ss0);
@@ -109,8 +110,9 @@ public class Worker {
             int i = 1;
             for (String outArg : template.outArgs) {
                 Object o0 = get(document, outArg);
-                if (o0 != null)
+                if (o0 != null) {
                     end = end.replace(String.format(CHAR0, i++), o0.toString());
+                }
             }
             end = filterId(end, gid, qid);
         } catch (Exception e) {

@@ -10,6 +10,14 @@
   "permType": "console",
   //输入 参数分隔符
   "splitChar": " ",
+  //网页管理的端口
+  "port": 20042,
+  //全局代理ip
+  "proxyIp": null,
+  //全局代理port
+  "proxyPort": 0,
+  //网页管理的密码
+  "passwd": "123456",
   //api 调用模板
   "templates": [
   ]
@@ -55,7 +63,10 @@
 
 ### 复杂的返回参数
 
+<details> 
+<summary>
 以下是 https://api.vvhan.com/api/weather?city=徐州&type=week 该 API 返回的数据
+</summary>
 
 ```json
 {
@@ -119,6 +130,13 @@
 }
 ```
 
+</details> 
+
+- 配置后 在群聊/好友 发送 未来天气 <城市名> 即可触发
+
+<details> 
+<summary>配置文件</summary> 
+
 ```json
 
 {
@@ -143,7 +161,7 @@
 }
 ```
 
-配置后 在群聊/好友 发送 未来天气 <城市名> 即可触发
+</details> 
 
 ### 最后送上实用配置
 
@@ -153,6 +171,9 @@
 - 星座运势 <星座>
 - 未来天气 <城市>
 - QQ凶吉 <QQ号>
+
+<details> 
+<summary>配置文件</summary> 
 
 ```json
 {
@@ -215,3 +236,7 @@
   ]
 }
 ```
+
+</details> 
+
+### 更多 帮助请查看 [releases](https://github.com/gdpl2112/MiraiCallApiPlugin/releases)

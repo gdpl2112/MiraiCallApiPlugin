@@ -55,13 +55,19 @@ public class Converter {
         t0 = t0.trim();
         String s0 = t0.trim().split("\\.")[0].trim();
         Object o = null;
-        if (s0.matches("\\[\\d+]")) {
-            Integer st = Integer.parseInt(s0.substring(1, s0.length() - 1));
+        if (s0.matches("\\[\\d*]")) {
             JSONArray arr = (JSONArray) j0;
-            o = arr.get(st);
-            int len = 4;
-            if (t0.length() >= len) t0 = t0.substring(len);
-            else t0 = t0.substring(len - 1);
+            String sts = s0.substring(1, s0.length() - 1);
+            if (sts.isEmpty()) {
+                o = arr;
+                t0 = t0.replaceFirst("\\[]", "");
+            } else {
+                Integer st = Integer.parseInt(sts);
+                o = arr.get(st);
+                int len = 4;
+                if (t0.length() >= len) t0 = t0.substring(len);
+                else t0 = t0.substring(len - 1);
+            }
         } else if (s0.matches(".*?\\[\\d+]")) {
             int i = s0.indexOf("[");
             int i1 = s0.indexOf("]");

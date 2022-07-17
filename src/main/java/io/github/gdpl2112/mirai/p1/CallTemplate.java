@@ -4,6 +4,7 @@ package io.github.gdpl2112.mirai.p1;
  * @author github.kloping
  */
 public class CallTemplate {
+    public Boolean sw = true;
     public String touch;
     public String url;
     public String out;
@@ -68,5 +69,18 @@ public class CallTemplate {
 
     public void setErr(String err) {
         this.err = err;
+    }
+
+    public Boolean getSw() {
+        return sw;
+    }
+
+    public void setSw(Boolean sw) {
+        this.sw = sw;
+    }
+
+    public void reverseSw() {
+        if (sw == null) sw = true;
+        this.sw = !sw;
     }
 }

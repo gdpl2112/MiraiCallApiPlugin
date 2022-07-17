@@ -1,5 +1,6 @@
 package io.github.gdpl2112.mirai.p1;
 
+import com.alibaba.fastjson.JSON;
 import io.github.kloping.io.ReadUtils;
 import io.github.kloping.url.UrlUtils;
 import net.mamoe.mirai.contact.Contact;
@@ -21,11 +22,12 @@ import java.util.regex.Pattern;
  * @author github.kloping
  */
 public class Parse {
-    private static final Pattern PATTER_FACE = Pattern.compile("(<Face:\\d+>|\\[Face:\\d+])");
-    private static final Pattern PATTER_PIC = Pattern.compile("(<Pic:[^>^]+?>|\\[Pic:[^>^]+?])");
+    private static final Pattern PATTER_FACE = Pattern.compile("(<Face:\\d+>)");
+    private static final Pattern PATTER_PIC = Pattern.compile("(<Pic:[^>^]+?>)");
     private static final Pattern PATTER_URL = Pattern.compile("<Url:[^>^]+>");
-    private static final Pattern PATTER_AT = Pattern.compile("\\[At:.+?]|<At:.+?>");
-    private static final Pattern PATTER_VOICE = Pattern.compile("\\[Voice:.+?]|<Audio:.+?>");
+    private static final Pattern PATTER_AT = Pattern.compile("<Music:.*>");
+    private static final Pattern PATTER_MUSIC = Pattern.compile("<At:.+>");
+    private static final Pattern PATTER_VOICE = Pattern.compile("<Audio:.+>");
     public static final Pattern[] PATTERNS = {PATTER_FACE, PATTER_PIC, PATTER_URL, PATTER_AT, PATTER_VOICE};
 
     private static final String BASE64 = "base64,";
@@ -106,8 +108,7 @@ public class Parse {
             String str = o.toString();
             boolean k = (str.startsWith("<") || str.startsWith("[")) && !str.matches("\\[.+]请使用最新版手机QQ体验新功能");
             if (k) {
-                String ss = str.replace("<", "").replace(">", "")
-                        .replace("[", "").replace("]", "");
+                String ss = str.replace("<", "").replace(">", "");
                 int i1 = ss.indexOf(":");
                 String s1 = ss.substring(0, i1);
                 String s2 = ss.substring(i1 + 1);
@@ -125,6 +126,9 @@ public class Parse {
                     case "Audio":
                         builder.append(createVoiceMessageInGroup(s2, contact.getId(), contact));
                         break;
+                    case "Music":
+                        builder.append(createMusic(contact, s2));
+                        break;
                     default:
                         break;
                 }
@@ -133,6 +137,19 @@ public class Parse {
             }
         }
         return lls;
+    }
+
+    private static Message createMusic(Contact contact, String s2) {
+        String[] ss = s2.split(",");
+        MusicKind kind = MusicKind.valueOf(ss[0]);
+        MusicShare share = new MusicShare(kind
+                ,ss[1]
+                ,ss[2]
+                ,ss[3]
+                ,ss[4]
+                ,ss[5]
+        );
+        return share;
     }
 
     private static Face getFace(int parseInt) {
@@ -155,8 +172,8 @@ public class Parse {
         }
     }
 
-    public static Image createImage(Contact group, String path) {
-        Image image = null;
+    public static Message createImage(Contact group, String path) {
+        Message image = null;
         try {
             if (path.startsWith("http")) {
                 image = Contact.uploadImage(group, new ByteArrayInputStream(ReadUtils.readAll(new URL(path).openStream())));
@@ -164,6 +181,8 @@ public class Parse {
                 image = Image.fromId(path);
             } else if (path.contains(BASE64)) {
                 image = Contact.uploadImage(group, new ByteArrayInputStream(getBase64Data(path)));
+            } else if (path.startsWith("[") && path.endsWith("]")) {
+                image = createForwardMessageByPic(group, JSON.parseArray(path).toArray(new String[0]));
             } else {
                 image = Contact.uploadImage(group, new File(path));
             }
@@ -204,5 +223,13 @@ public class Parse {
             }
         }
         return null;
+    }
+
+    public static Message createForwardMessageByPic(Contact contact, String... picUrl) {
+        ForwardMessageBuilder builder = new ForwardMessageBuilder(contact);
+        for (String s : picUrl) {
+            builder.add(contact.getId(), contact.getBot().getNick(), createImage(contact, s));
+        }
+        return builder.build();
     }
 }
