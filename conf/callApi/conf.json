@@ -73,16 +73,6 @@
 			"proxyIp":"",
 			"proxyPort":0,
 			"sw":true,
-			"touch":"需要我吗",
-			"url":"https://ovooa.com/API/face_need/?QQ=$qid"
-		},
-		{
-			"err":"调用失败",
-			"out":"<Pic:$1>",
-			"outArgs":["$url"],
-			"proxyIp":"",
-			"proxyPort":0,
-			"sw":true,
 			"touch":"需要ta吗",
 			"url":"https://ovooa.com/API/face_need/?QQ=$number"
 		},
@@ -115,26 +105,6 @@
 			"sw":true,
 			"touch":"酷狗点歌",
 			"url":"http://kloping.top/api/search/song?keyword=$1&type=kugou&n=2"
-		},
-		{
-			"err":"调用失败",
-			"out":"<Music:QQMusic,$1,$2,https://y.qq.com/,$3,$4>",
-			"outArgs":["data[0].media_name","data[0].author_name","data[0].imgUrl","data[0].songUrl"],
-			"proxyIp":"",
-			"proxyPort":0,
-			"sw":true,
-			"touch":"QQ点歌",
-			"url":"http://kloping.top/api/search/song?keyword=$1&type=qq&n=2"
-		},
-		{
-			"err":"调用失败",
-			"out":"<Music:NeteaseCloudMusic,$1,$2,https://music.163.com/,$3,$4>",
-			"outArgs":["data[0].media_name","data[0].author_name","data[0].imgUrl","data[0].songUrl"],
-			"proxyIp":"",
-			"proxyPort":0,
-			"sw":true,
-			"touch":"网易点歌",
-			"url":"http://kloping.top/api/search/song?keyword=$1&type=wy&n=2"
 		}
 	]
 }
