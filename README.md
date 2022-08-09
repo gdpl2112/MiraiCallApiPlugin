@@ -57,7 +57,7 @@
 - At格式 \<At:QQ号>
 - 语音格式 \<Audio:路径>
 
-见 [详情](https://github.com/gdpl2112/MiraiCallApiPlugin/blob/master/src/main/java/io/github/Kloping/mirai/p1/Parse.java#L11)
+见 [详情](https://github.com/gdpl2112/MiraiCallApiPlugin/blob/master/src/main/java/io/github/gdpl2112/mirai/p1/Parse.java#L25)
 
 配置后 在群聊使用 /callApi call 涩图 或在群聊/好友 发送 涩图 即可触发
 
