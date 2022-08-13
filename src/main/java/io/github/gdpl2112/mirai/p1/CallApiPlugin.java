@@ -10,9 +10,7 @@ import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.event.SimpleListenerHost;
-import net.mamoe.mirai.event.events.FriendMessageEvent;
-import net.mamoe.mirai.event.events.GroupMessageEvent;
-import net.mamoe.mirai.event.events.MessageEvent;
+import net.mamoe.mirai.event.events.*;
 import net.mamoe.mirai.message.data.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +26,7 @@ public class CallApiPlugin extends JavaPlugin {
     public static Conf conf = null;
 
     public CallApiPlugin() {
-        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "2.4").info("调用自定义API插件").build());
+        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "2.5-M1").info("调用自定义API插件").build());
     }
 
     @Override
@@ -52,6 +50,21 @@ public class CallApiPlugin extends JavaPlugin {
                 onMessage0(event);
             }
 
+            @EventHandler
+            public void onMessage(GroupMessageSyncEvent event) {
+                onMessage0(event);
+            }
+
+            @EventHandler
+            public void onMessage(FriendMessageEvent event) {
+                onMessage0(event);
+            }
+
+            @EventHandler
+            public void onMessage(FriendMessageSyncEvent event) {
+                onMessage0(event);
+            }
+
             private void onMessage0(MessageEvent event) {
                 if (!conf.getPermType().equals(Conf.ALL))
                     return;
@@ -62,11 +75,6 @@ public class CallApiPlugin extends JavaPlugin {
                         event.getSubject().sendMessage(message);
                     }
                 }
-            }
-
-            @EventHandler
-            public void onMessage(FriendMessageEvent event) {
-                onMessage0(event);
             }
         });
     }
