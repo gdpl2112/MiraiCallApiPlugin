@@ -111,7 +111,9 @@ public class Worker {
             for (String outArg : template.outArgs) {
                 Object o0 = get(document, outArg);
                 if (o0 != null) {
-                    end = end.replace(String.format(CHAR0, i++), o0.toString());
+                    String o1 = o0.toString();
+                    o1 = o1.replaceAll(",",";");
+                    end = end.replace(String.format(CHAR0, i++), o1);
                 }
             }
             end = filterId(end, gid, qid);
