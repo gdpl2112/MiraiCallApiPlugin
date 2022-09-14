@@ -15,6 +15,7 @@ import net.mamoe.mirai.message.data.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.HashMap;
 
 /**
  * @author github.kloping
@@ -26,7 +27,8 @@ public class CallApiPlugin extends JavaPlugin {
     public static Conf conf = null;
 
     public CallApiPlugin() {
-        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "2.5.1").info("调用自定义API插件").build());
+        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "2.6")
+                .info("调用自定义API插件").build());
     }
 
     @Override
@@ -106,5 +108,6 @@ public class CallApiPlugin extends JavaPlugin {
         conf = FileInitializeValue.getValue(CONF_FILE.getAbsolutePath(), conf, true);
         conf = FileInitializeValue.putValues(CONF_FILE.getAbsolutePath(), conf, true);
         Worker.init();
+        ManagerConf.reload();
     }
 }

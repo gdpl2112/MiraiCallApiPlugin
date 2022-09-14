@@ -44,4 +44,43 @@ class CommandLine0 private constructor() : JCompositeCommand(CallApiPlugin.INSTA
         }
         sendMessage("未发现该API")
     }
+
+    @Description("某一API权限控制")
+    @SubCommand("set")
+    suspend fun CommandSender.callApiSetPer(
+        @Name("触发词") str: String,
+        @Name("id") id: String,
+        @Name("布尔值") k: Boolean
+    ) {
+        ManagerConf.INSTANCE.getStateByTouchAndIdDefault(str, id, k)
+        ManagerConf.INSTANCE.getTouch2Id2K()[str]?.set(id, k);
+        ManagerConf.INSTANCE.apply()
+        sendMessage("当前触发词: '${str}'在id: '${id}'状态为${k}")
+    }
+
+    @Description("某一API权限查询")
+    @SubCommand("get")
+    suspend fun CommandSender.callApiGetPer(
+        @Name("触发词") str: String,
+        @Name("id") id: String,
+    ) {
+        val k = ManagerConf.INSTANCE.getStateByTouchAndIdDefault(str, id, true)
+        sendMessage("当前触发词: '${str}'在id: '${id}'状态为${k}")
+    }
+
+    @Description("某一API存在的所有id同时操作权限控制")
+    @SubCommand("setAll")
+    suspend fun CommandSender.callApiSetAllPer(
+        @Name("触发词") str: String,
+        @Name("布尔值") k: Boolean
+    ) {
+        ManagerConf.INSTANCE.getStateByTouchAndIdDefault(str, "f0", k)
+        val map = ManagerConf.INSTANCE.getTouch2Id2K()[str]!!
+        for (s in map.keys) {
+            map[s] = k
+        }
+        ManagerConf.INSTANCE.apply()
+        sendMessage("当前触发词: '${str}'在id状态为${k}")
+    }
+
 }

@@ -90,6 +90,7 @@ public class Worker {
             for (CallTemplate template : conf.getTemplates()) {
                 if (template.touch.equals(first)) {
                     if (!template.sw) continue;
+                    if (!enable(template, gid, qid)) continue;
                     String[] ss0 = new String[ss.length - 1];
                     System.arraycopy(ss, 1, ss0, 0, ss0.length);
                     Document document = doc(gid, qid, template, ss0);
@@ -103,6 +104,14 @@ public class Worker {
         return null;
     }
 
+    private static boolean enable(CallTemplate template, long gid, long qid) {
+            if (gid == qid) {
+                return ManagerConf.INSTANCE.getStateByTouchAndIdDefault(template.touch, "f" + qid, true);
+            } else {
+                return ManagerConf.INSTANCE.getStateByTouchAndIdDefault(template.touch, "g" + gid, true);
+            }
+    }
+
     private static Message parse(Document document, CallTemplate template, Contact contact, long gid, long qid) {
         Message message = null;
         String end = template.out;
@@ -112,7 +121,7 @@ public class Worker {
                 Object o0 = get(document, outArg);
                 if (o0 != null) {
                     String o1 = o0.toString();
-                    o1 = o1.replaceAll(",",";");
+                    o1 = o1.replaceAll(",", ";");
                     end = end.replace(String.format(CHAR0, i++), o1);
                 }
             }
