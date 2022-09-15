@@ -1,5 +1,6 @@
 package io.github.gdpl2112.mirai.p1;
 
+import com.alibaba.fastjson.JSON;
 import io.github.kloping.MySpringTool.StarterApplication;
 import io.github.kloping.MySpringTool.StarterObjectApplication;
 import io.github.kloping.MySpringTool.annotations.CommentScan;
@@ -105,11 +106,11 @@ public class Worker {
     }
 
     private static boolean enable(CallTemplate template, long gid, long qid) {
-            if (gid == qid) {
-                return ManagerConf.INSTANCE.getStateByTouchAndIdDefault(template.touch, "f" + qid, true);
-            } else {
-                return ManagerConf.INSTANCE.getStateByTouchAndIdDefault(template.touch, "g" + gid, true);
-            }
+        if (gid == qid) {
+            return ManagerConf.INSTANCE.getStateByTouchAndIdDefault(template.touch, "f" + qid, true);
+        } else {
+            return ManagerConf.INSTANCE.getStateByTouchAndIdDefault(template.touch, "g" + gid, true);
+        }
     }
 
     private static Message parse(Document document, CallTemplate template, Contact contact, long gid, long qid) {
@@ -121,7 +122,11 @@ public class Worker {
                 Object o0 = get(document, outArg);
                 if (o0 != null) {
                     String o1 = o0.toString();
-                    o1 = o1.replaceAll(",", ";");
+                    try {
+                        JSON json = (JSON) JSON.parse(o1);
+                    } catch (Exception e) {
+                        o1 = o1.replaceAll(",", ";").replaceAll("\\s","");
+                    }
                     end = end.replace(String.format(CHAR0, i++), o1);
                 }
             }

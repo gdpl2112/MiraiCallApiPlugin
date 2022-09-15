@@ -1,0 +1,12 @@
+->io.github.gdpl2112.mirai.p1.ManagerConf
+	touch2Id2K: ->java.util.LinkedHashMap
+		0: ->io.github.kloping.serialize.HMLObject$Entry0
+			kName: "java.lang.String"
+			vName: "java.util.HashMap"
+			k: "快手图集"
+			v: ->java.util.HashMap
+				0: ->io.github.kloping.serialize.HMLObject$Entry0
+					kName: "java.lang.String"
+					vName: "java.lang.Boolean"
+					k: "g201530479"
+					v: true
