@@ -20,6 +20,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static io.github.gdpl2112.mirai.p1.CallApiPlugin.conf;
 import static io.github.gdpl2112.mirai.p1.Converter.*;
@@ -118,8 +120,9 @@ public class Worker {
         String end = template.out;
         try {
             int i = 1;
+            AtomicReference<Document> doc0 = new AtomicReference<>();
             for (String outArg : template.outArgs) {
-                Object o0 = get(connection, outArg);
+                Object o0 = get(connection, outArg,doc0);
                 if (o0 != null) {
                     String o1 = o0.toString();
                     try {

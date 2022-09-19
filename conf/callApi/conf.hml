@@ -35,3 +35,13 @@
 					vName: "java.lang.Boolean"
 					k: "f930204019"
 					v: true
+		3: ->io.github.kloping.serialize.HMLObject$Entry0
+			kName: "java.lang.String"
+			vName: "java.util.HashMap"
+			k: "酷狗点歌"
+			v: ->java.util.HashMap
+				0: ->io.github.kloping.serialize.HMLObject$Entry0
+					kName: "java.lang.String"
+					vName: "java.lang.Boolean"
+					k: "f930204019"
+					v: true

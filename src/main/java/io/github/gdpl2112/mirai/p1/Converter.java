@@ -6,6 +6,9 @@ import com.alibaba.fastjson.JSONObject;
 import io.github.kloping.io.ReadUtils;
 import io.github.kloping.number.NumberUtils;
 import org.jsoup.Connection;
+import org.jsoup.nodes.Document;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author github.kloping
@@ -45,14 +48,17 @@ public class Converter {
         return url;
     }
 
-    public static Object get(Connection t1, String t0) throws Exception {
+    public static Object get(Connection t1, String t0, AtomicReference<Document> doc0) throws Exception {
         if (t0.equals(ALL)) {
             return ReadUtils.readAll(t1.execute().bodyStream(), "utf-8");
         }
         if (t0.equals(PAR_URL)) {
             return t1.get().location();
         }
-        return get0(t1.get().body().text(), t0);
+        if (doc0.get() == null) {
+            doc0.set(t1.get());
+        }
+        return get0(doc0.get().body().text(), t0);
     }
 
     public static Object get0(String t1, String t0) throws Exception {
