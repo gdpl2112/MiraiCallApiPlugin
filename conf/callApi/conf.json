@@ -105,6 +105,16 @@
 			"sw":true,
 			"touch":"酷狗点歌",
 			"url":"http://kloping.top/api/search/song?keyword=$1&type=kugou&n=2"
+		},
+		{
+			"err":null,
+			"out":"<At:$qid>\n$1",
+			"outArgs":["$all"],
+			"proxyIp":"",
+			"proxyPort":0,
+			"sw":true,
+			"touch":"/ping",
+			"url":"https://xian.txma.cn/API/sping.php?url=$1"
 		}
 	]
 }

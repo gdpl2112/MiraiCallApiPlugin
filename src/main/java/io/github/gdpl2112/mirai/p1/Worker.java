@@ -94,9 +94,9 @@ public class Worker {
                     if (!enable(template, gid, qid)) continue;
                     String[] ss0 = new String[ss.length - 1];
                     System.arraycopy(ss, 1, ss0, 0, ss0.length);
-                    Document document = doc(gid, qid, template, ss0);
-                    if (document == null) return null;
-                    return parse(document, template, Bot.getInstances().get(0).getAsFriend(), gid, qid);
+                    Connection connection = doc(gid, qid, template, ss0);
+                    if (connection == null) return null;
+                    return parse(connection, template, Bot.getInstances().get(0).getAsFriend(), gid, qid);
                 }
             }
         } catch (Exception e) {
@@ -113,19 +113,19 @@ public class Worker {
         }
     }
 
-    private static Message parse(Document document, CallTemplate template, Contact contact, long gid, long qid) {
+    private static Message parse(Connection connection, CallTemplate template, Contact contact, long gid, long qid) {
         Message message = null;
         String end = template.out;
         try {
             int i = 1;
             for (String outArg : template.outArgs) {
-                Object o0 = get(document, outArg);
+                Object o0 = get(connection, outArg);
                 if (o0 != null) {
                     String o1 = o0.toString();
                     try {
                         JSON json = (JSON) JSON.parse(o1);
                     } catch (Exception e) {
-                        o1 = o1.replaceAll(",", ";").replaceAll("\\s","");
+                        o1 = o1.replaceAll(",", ";");
                     }
                     end = end.replace(String.format(CHAR0, i++), o1);
                 }
@@ -155,7 +155,7 @@ public class Worker {
         return message;
     }
 
-    public static Document doc(long gid, long qid, CallTemplate template, String... args) {
+    public static Connection doc(long gid, long qid, CallTemplate template, String... args) {
         int i = 1;
         String url = template.url;
         for (String arg : args) {
@@ -175,7 +175,7 @@ public class Worker {
             } else if (conf.getProxyIp() != null && conf.getProxyPort() != null && !conf.getProxyIp().isEmpty()) {
                 connection.proxy(conf.getProxyIp(), conf.getProxyPort());
             }
-            return connection.get();
+            return connection;
         } catch (IOException e) {
             e.printStackTrace();
         }

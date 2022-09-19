@@ -3,8 +3,9 @@ package io.github.gdpl2112.mirai.p1;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import io.github.kloping.io.ReadUtils;
 import io.github.kloping.number.NumberUtils;
-import org.jsoup.nodes.Document;
+import org.jsoup.Connection;
 
 /**
  * @author github.kloping
@@ -44,10 +45,14 @@ public class Converter {
         return url;
     }
 
-    public static Object get(Document t1, String t0) throws Exception {
-        if (t0.equals(ALL)) return t1.body().text();
-        if (t0.equals(PAR_URL)) return t1.location();
-        return get0(t1.body().text(), t0);
+    public static Object get(Connection t1, String t0) throws Exception {
+        if (t0.equals(ALL)) {
+            return ReadUtils.readAll(t1.execute().bodyStream(), "utf-8");
+        }
+        if (t0.equals(PAR_URL)) {
+            return t1.get().location();
+        }
+        return get0(t1.get().body().text(), t0);
     }
 
     public static Object get0(String t1, String t0) throws Exception {

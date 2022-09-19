@@ -25,10 +25,10 @@ public class Parse {
     private static final Pattern PATTER_FACE = Pattern.compile("(<Face:\\d+>)");
     private static final Pattern PATTER_PIC = Pattern.compile("(<Pic:[^>^]+?>)");
     private static final Pattern PATTER_URL = Pattern.compile("<Url:[^>^]+>");
-    private static final Pattern PATTER_AT = Pattern.compile("<Music:.*>");
-    private static final Pattern PATTER_MUSIC = Pattern.compile("<At:.+>");
+    private static final Pattern PATTER_AT = Pattern.compile("<At:.*>");
+    private static final Pattern PATTER_MUSIC = Pattern.compile("<Music:\\d+>");
     private static final Pattern PATTER_VOICE = Pattern.compile("<Audio:.+>");
-    public static final Pattern[] PATTERNS = {PATTER_FACE, PATTER_PIC, PATTER_URL, PATTER_AT, PATTER_VOICE};
+    public static final Pattern[] PATTERNS = {PATTER_FACE, PATTER_PIC, PATTER_URL, PATTER_AT, PATTER_VOICE, PATTER_MUSIC};
 
     private static final String BASE64 = "base64,";
 
@@ -54,7 +54,7 @@ public class Parse {
 
     public static void a1b2c3(List<String> list, String line) {
         if (list == null || line == null || line.isEmpty()) return;
-        Map<Integer, String> nm = getNearestOne(line, PATTER_PIC, PATTER_AT, PATTER_FACE, PATTER_URL);
+        Map<Integer, String> nm = getNearestOne(line, PATTER_FACE, PATTER_PIC, PATTER_URL, PATTER_AT, PATTER_VOICE, PATTER_MUSIC);
         if (nm.isEmpty()) {
             list.add(line);
             return;
@@ -143,11 +143,11 @@ public class Parse {
         String[] ss = s2.split(",");
         MusicKind kind = MusicKind.valueOf(ss[0]);
         MusicShare share = new MusicShare(kind
-                ,ss[1]
-                ,ss[2]
-                ,ss[3]
-                ,ss[4]
-                ,ss[5]
+                , ss[1]
+                , ss[2]
+                , ss[3]
+                , ss[4]
+                , ss[5]
         );
         return share;
     }

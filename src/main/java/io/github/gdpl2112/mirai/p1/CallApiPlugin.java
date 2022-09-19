@@ -27,7 +27,7 @@ public class CallApiPlugin extends JavaPlugin {
     public static Conf conf = null;
 
     public CallApiPlugin() {
-        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "2.7")
+        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "2.7.1")
                 .info("调用自定义API插件").build());
     }
 
