@@ -72,7 +72,7 @@ public class CallApiPlugin extends JavaPlugin {
                     return;
                 if (event.getMessage().size() > 1) {
                     String text = toText(event.getMessage());
-                    Message message = Worker.call(text, event.getSubject().getId(), event.getSender().getId());
+                    Message message = Worker.call(text, event.getSubject().getId(), event.getSender().getId(),event.getBot());
                     if (message != null) {
                         event.getSubject().sendMessage(message);
                     }

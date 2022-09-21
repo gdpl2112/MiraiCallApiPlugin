@@ -5,6 +5,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.github.kloping.io.ReadUtils;
 import io.github.kloping.number.NumberUtils;
+import net.mamoe.mirai.Bot;
+import net.mamoe.mirai.contact.Friend;
+import net.mamoe.mirai.contact.Group;
+import net.mamoe.mirai.contact.Member;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 
@@ -17,6 +21,15 @@ public class Converter {
     public static final String QID = "$qid";
     public static final String QID0 = "\\$qid";
 
+    public static final String QNAME = "$qname";
+    public static final String QNAME0 = "\\$qname";
+
+    public static final String MNAME = "$mname";
+    public static final String MNAME0 = "\\$mname";
+
+    public static final String GNAME = "$gname";
+    public static final String GNAME0 = "\\$gname";
+
     public static final String GID = "$gid";
     public static final String GID0 = "\\$gid";
 
@@ -27,10 +40,9 @@ public class Converter {
     public static final String PAR_URL = "$url";
 
     public static final String PAR_NUMBER = "$number";
-
     public static final String PAR_NUMBER0 = "\\$number";
 
-    public static String filterId(String url, long gid, long qid, String... args) {
+    public static String filterId(String url, Bot bot, long gid, long qid, String... args) {
         if (url == null) return url;
         if (url.contains(QID)) {
             url = url.replaceAll(QID0, String.valueOf(qid));
@@ -44,6 +56,26 @@ public class Converter {
                 nums.append(NumberUtils.findNumberFromString(arg));
             }
             url = url.replaceAll(PAR_NUMBER0, String.valueOf(nums.toString()));
+        }
+        if (url.contains(QNAME)) {
+            Friend friend = bot.getFriend(qid);
+            if (friend != null) {
+                url = url.replaceAll(QNAME0, friend.getNick());
+            } else {
+                Member member = bot.getGroup(gid).getMembers().get(qid);
+                if (member != null)
+                    url = url.replaceAll(QNAME0, member.getNick());
+            }
+        }
+        if (url.contains(MNAME)) {
+            Member member = bot.getGroup(gid).getMembers().get(qid);
+            if (member != null)
+                url = url.replaceAll(MNAME0, member.getNameCard());
+        }
+        if (url.contains(GNAME)) {
+            Group group = bot.getGroup(gid);
+            if (group != null)
+                url = url.replaceAll(MNAME0, group.getName());
         }
         return url;
     }

@@ -6,7 +6,6 @@ import io.github.kloping.MySpringTool.StarterObjectApplication;
 import io.github.kloping.MySpringTool.annotations.CommentScan;
 import io.github.kloping.little_web.conf.TomcatConfig;
 import net.mamoe.mirai.Bot;
-import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.message.data.Message;
 import net.mamoe.mirai.message.data.PlainText;
 import org.jsoup.Connection;
@@ -20,7 +19,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static io.github.gdpl2112.mirai.p1.CallApiPlugin.conf;
@@ -85,7 +83,7 @@ public class Worker {
         application.logger.info("服务启动成功 请访问 http://localhost:" + conf.getPort() + "/?key=" + conf.getPasswd());
     }
 
-    public static Message call(String text, long gid, long qid) {
+    public static Message call(String text, long gid, long qid, Bot bot) {
         try {
             Conf conf = CallApiPlugin.conf;
             String[] ss = text.split(conf.getSplitChar());
@@ -96,9 +94,9 @@ public class Worker {
                     if (!enable(template, gid, qid)) continue;
                     String[] ss0 = new String[ss.length - 1];
                     System.arraycopy(ss, 1, ss0, 0, ss0.length);
-                    Connection connection = doc(gid, qid, template, ss0);
+                    Connection connection = doc(bot, gid, qid, template, ss0);
                     if (connection == null) return null;
-                    return parse(connection, template, Bot.getInstances().get(0).getAsFriend(), gid, qid);
+                    return parse(connection, template, bot, gid, qid);
                 }
             }
         } catch (Exception e) {
@@ -115,14 +113,14 @@ public class Worker {
         }
     }
 
-    private static Message parse(Connection connection, CallTemplate template, Contact contact, long gid, long qid) {
+    private static Message parse(Connection connection, CallTemplate template, Bot bot, long gid, long qid) {
         Message message = null;
         String end = template.out;
         try {
             int i = 1;
             AtomicReference<Document> doc0 = new AtomicReference<>();
             for (String outArg : template.outArgs) {
-                Object o0 = get(connection, outArg,doc0);
+                Object o0 = get(connection, outArg, doc0);
                 if (o0 != null) {
                     String o1 = o0.toString();
                     try {
@@ -133,7 +131,7 @@ public class Worker {
                     end = end.replace(String.format(CHAR0, i++), o1);
                 }
             }
-            end = filterId(end, gid, qid);
+            end = filterId(end, bot, gid, qid);
         } catch (Exception e) {
             if (e instanceof NullPointerException) {
                 e.printStackTrace();
@@ -145,7 +143,7 @@ public class Worker {
             }
         }
         try {
-            message = getMessageFromString(end, contact);
+            message = getMessageFromString(end, bot.getAsFriend());
         } catch (Exception e) {
             e.printStackTrace();
             if (template.err != null && !template.err.isEmpty()) {
@@ -158,13 +156,13 @@ public class Worker {
         return message;
     }
 
-    public static Connection doc(long gid, long qid, CallTemplate template, String... args) {
+    public static Connection doc(Bot bot, long gid, long qid, CallTemplate template, String... args) {
         int i = 1;
         String url = template.url;
         for (String arg : args) {
             url = url.replace(String.format(CHAR0, i++), arg);
         }
-        url = filterId(url, gid, qid, args);
+        url = filterId(url, bot, gid, qid, args);
         try {
             Connection connection = org.jsoup.Jsoup.connect(url).ignoreContentType(true).ignoreHttpErrors(true)
                     .header("Host", new URL(url).getHost())

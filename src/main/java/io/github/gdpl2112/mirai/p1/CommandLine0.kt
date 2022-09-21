@@ -21,17 +21,6 @@ class CommandLine0 private constructor() : JCompositeCommand(CallApiPlugin.INSTA
         sendMessage("重载完成")
     }
 
-    @Description("调用api")
-    @SubCommand("call")
-    suspend fun CommandSender.callApi(str: String) {
-        val m = this.subject?.let { this.user?.let { it1 -> Worker.call(str, it.id, it1.id) } };
-        if (m == null) {
-            sendMessage("调用失败")
-        } else {
-            sendMessage(m)
-        }
-    }
-
     @Description("开关某一API")
     @SubCommand("switch")
     suspend fun CommandSender.switchApi(@Name("触发词") str: String) {

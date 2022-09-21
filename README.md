@@ -2,6 +2,8 @@
 
 [下载](https://github.com/gdpl2112/MiraiCallApiPlugin/releases)
 
+[表达式](./updataLog/expression.md)
+
 ### **使用前请检查依赖(lib-tts)是否一同添加至plugins 前往 [releases](https://github.com/Kloping/Mirai_Plugins_Auto_Reply/releases) 查找**
 
 启动后生成配置文件
