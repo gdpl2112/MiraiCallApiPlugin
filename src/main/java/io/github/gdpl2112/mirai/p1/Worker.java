@@ -128,7 +128,7 @@ public class Worker {
                     } catch (Exception e) {
                         o1 = o1.replaceAll(",", ";");
                     }
-                    end = end.replace(String.format(CHAR0, i++), o1);
+                    end = end.replaceFirst(String.format(CHAR0, i++), o1);
                 }
             }
             end = filterId(end, bot, gid, qid);
@@ -160,7 +160,7 @@ public class Worker {
         int i = 1;
         String url = template.url;
         for (String arg : args) {
-            url = url.replace(String.format(CHAR0, i++), arg);
+            url = url.replaceFirst(String.format(CHAR0, i++), arg);
         }
         url = filterId(url, bot, gid, qid, args);
         try {

@@ -33,7 +33,7 @@ public class Converter {
     public static final String GID = "$gid";
     public static final String GID0 = "\\$gid";
 
-    public static final String CHAR0 = "$%s";
+    public static final String CHAR0 = "\\$%s";
 
     public static final String ALL = "$all";
 
