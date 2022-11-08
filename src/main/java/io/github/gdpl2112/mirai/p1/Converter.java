@@ -93,6 +93,14 @@ public class Converter {
         return get0(doc0.get().body().text(), t0);
     }
 
+    /**
+     * get from json
+     *
+     * @param t1 json
+     * @param t0 表达式
+     * @return
+     * @throws Exception
+     */
     public static Object get0(String t1, String t0) throws Exception {
         JSON j0 = (JSON) JSON.parse(t1);
         t0 = t0.trim();

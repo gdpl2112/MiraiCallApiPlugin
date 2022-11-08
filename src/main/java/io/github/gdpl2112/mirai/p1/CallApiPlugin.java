@@ -27,7 +27,7 @@ public class CallApiPlugin extends JavaPlugin {
     public static Conf conf = null;
 
     public CallApiPlugin() {
-        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "2.7.3")
+        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "2.8")
                 .info("调用自定义API插件").build());
     }
 
@@ -40,7 +40,6 @@ public class CallApiPlugin extends JavaPlugin {
     public void onEnable() {
         super.onEnable();
         loadConf();
-        CommandManager.INSTANCE.registerCommand(CommandLine0.INSTANCE, true);
         GlobalEventChannel.INSTANCE.registerListenerHost(new SimpleListenerHost() {
             @Override
             public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
@@ -79,6 +78,7 @@ public class CallApiPlugin extends JavaPlugin {
                 }
             }
         });
+        CommandManager.INSTANCE.registerCommand(CommandLine0.INSTANCE, true);
     }
 
     private String toText(MessageChain m) {

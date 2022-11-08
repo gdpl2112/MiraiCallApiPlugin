@@ -115,6 +115,16 @@
 			"sw":true,
 			"touch":"/ping",
 			"url":"https://xian.txma.cn/API/sping.php?url=$1"
+		},
+		{
+			"err":null,
+			"out":"id：$1\n来自群$2\n的$3\n时间：$call(http://kloping.top/stamp2time?stamp=$4&time=)\n昵称：$5\n信息：$6\n剩余捡起次数：$7",
+			"outArgs":["id","gid","sid","time","name","message","state"],
+			"proxyIp":"",
+			"proxyPort":0,
+			"sw":true,
+			"touch":"/捡瓶子",
+			"url":"http://kloping.top/api/pickUpBottle"
 		}
 	]
 }

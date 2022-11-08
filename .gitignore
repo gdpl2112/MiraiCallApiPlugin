@@ -4,7 +4,8 @@ config
 data
 plugins
 **/test
-
+plugin-libraries
+plugin-shared-libraries
 ### Java template
 # Compiled class file
 *.class

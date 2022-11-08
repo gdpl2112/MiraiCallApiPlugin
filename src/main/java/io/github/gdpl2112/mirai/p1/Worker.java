@@ -5,6 +5,7 @@ import io.github.kloping.MySpringTool.StarterApplication;
 import io.github.kloping.MySpringTool.StarterObjectApplication;
 import io.github.kloping.MySpringTool.annotations.CommentScan;
 import io.github.kloping.little_web.conf.TomcatConfig;
+import io.github.kloping.reg.MatcherUtils;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.message.data.Message;
 import net.mamoe.mirai.message.data.PlainText;
@@ -132,6 +133,7 @@ public class Worker {
                 }
             }
             end = filterId(end, bot, gid, qid);
+            end = filterCall(end,template);
         } catch (Exception e) {
             if (e instanceof NullPointerException) {
                 e.printStackTrace();
@@ -156,30 +158,47 @@ public class Worker {
         return message;
     }
 
-    public static Connection doc(Bot bot, long gid, long qid, CallTemplate template, String... args) {
+    public static Connection doc(Bot bot, long gid, long qid, CallTemplate template, String... args) throws Exception {
         int i = 1;
         String url = template.url;
         for (String arg : args) {
             url = url.replaceFirst(String.format(CHAR0, i++), arg);
         }
         url = filterId(url, bot, gid, qid, args);
+        url = filterCall(url, template);
         try {
-            Connection connection = org.jsoup.Jsoup.connect(url).ignoreContentType(true).ignoreHttpErrors(true)
-                    .header("Host", new URL(url).getHost())
-                    .header("accept-encoding", "gzip, deflate, br")
-                    .userAgent(
-                            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36 Edg/100.0.1185.50"
-                    );
-            connection.timeout(60000);
-            if (template.getProxyIp() != null && template.getProxyPort() != null && !template.getProxyIp().isEmpty()) {
-                connection.proxy(template.getProxyIp(), template.getProxyPort());
-            } else if (conf.getProxyIp() != null && conf.getProxyPort() != null && !conf.getProxyIp().isEmpty()) {
-                connection.proxy(conf.getProxyIp(), conf.getProxyPort());
-            }
-            return connection;
+            return getConnection(url, template);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static String filterCall(String url, CallTemplate template) throws Exception {
+        for (String s : MatcherUtils.matcherAll(url, "\\$call.?(.+)")) {
+            String ex = s.substring(s.indexOf("call") + 4, s.indexOf("("));
+            String u0 = s.substring(s.indexOf("(") + 1, s.lastIndexOf(")"));
+            String body = getConnection(u0, template).get().body().text();
+            if (ex.isEmpty())
+                url = url.replace(s, body);
+            else url = url.replace(s, get0(body, ex).toString());
+        }
+        return url;
+    }
+
+    public static Connection getConnection(String url, CallTemplate template) throws Exception {
+        Connection connection = org.jsoup.Jsoup.connect(url).ignoreContentType(true).ignoreHttpErrors(true)
+                .header("Host", new URL(url).getHost())
+                .header("accept-encoding", "gzip, deflate, br")
+                .userAgent(
+                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36 Edg/100.0.1185.50"
+                );
+        connection.timeout(60000);
+        if (template.getProxyIp() != null && template.getProxyPort() != null && !template.getProxyIp().isEmpty()) {
+            connection.proxy(template.getProxyIp(), template.getProxyPort());
+        } else if (conf.getProxyIp() != null && conf.getProxyPort() != null && !conf.getProxyIp().isEmpty()) {
+            connection.proxy(conf.getProxyIp(), conf.getProxyPort());
+        }
+        return connection;
     }
 }
