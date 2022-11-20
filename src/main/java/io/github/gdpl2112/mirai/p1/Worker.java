@@ -189,7 +189,7 @@ public class Worker {
     public static Connection getConnection(String url, CallTemplate template) throws Exception {
         Connection connection = org.jsoup.Jsoup.connect(url).ignoreContentType(true).ignoreHttpErrors(true)
                 .header("Host", new URL(url).getHost())
-                .header("accept-encoding", "gzip, deflate, br")
+//                .header("accept-encoding", "*/*")
                 .userAgent(
                         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36 Edg/100.0.1185.50"
                 );
