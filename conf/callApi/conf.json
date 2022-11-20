@@ -125,16 +125,6 @@
 			"sw":true,
 			"touch":"/捡瓶子",
 			"url":"http://kloping.top/api/pickUpBottle"
-		},
-		{
-			"err":null,
-			"out":"<At:$qid>\n服务器：$1\n游戏：$2\n在线状态：$3\n在线人数(等待)：$4/$6($5)",
-			"outArgs":["response[0].name","response[0].game","response[0].online","response[0].players","response[0].queue","response[0].maxplayers"],
-			"proxyIp":"",
-			"proxyPort":0,
-			"sw":true,
-			"touch":"欧服状态",
-			"url":"https://api.truckersmp.com/v2/servers"
 		}
 	]
 }
