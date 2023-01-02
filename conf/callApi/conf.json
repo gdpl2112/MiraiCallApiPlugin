@@ -7,36 +7,6 @@
 	"splitChar":" ",
 	"templates":[
 		{
-			"err":"涩图调用失败",
-			"out":"<Pic:$1>",
-			"outArgs":["pic"],
-			"proxyIp":"",
-			"proxyPort":0,
-			"sw":true,
-			"touch":"涩图",
-			"url":"http://iw233.fgimax2.fgnwctvip.com/API/Ghs.php?type=json"
-		},
-		{
-			"err":"调用失败",
-			"out":"$1",
-			"outArgs":["$all"],
-			"proxyIp":"",
-			"proxyPort":0,
-			"sw":true,
-			"touch":"我在人间凑数的日子",
-			"url":"https://api.iyk0.com/renjian/"
-		},
-		{
-			"err":"调用失败",
-			"out":"$1",
-			"outArgs":["data"],
-			"proxyIp":"",
-			"proxyPort":0,
-			"sw":true,
-			"touch":"星座运势",
-			"url":"https://api.iyk0.com/xzys/?msg=$1"
-		},
-		{
 			"err":"天气查询失败",
 			"out":"<At:$qid>\n$1:$2\n$3:$4\n$5:$6\n",
 			"outArgs":["data.forecast[0].date","data.forecast[0].type","data.forecast[1].date","data.forecast[1].type","data.forecast[2].date","data.forecast[2].type"],
@@ -45,16 +15,6 @@
 			"sw":true,
 			"touch":"未来天气",
 			"url":"https://api.vvhan.com/api/weather?city=$1&type=week"
-		},
-		{
-			"err":"调用失败",
-			"out":"<Audio:$1>",
-			"outArgs":["mp3"],
-			"proxyIp":"",
-			"proxyPort":0,
-			"sw":true,
-			"touch":"小妲己",
-			"url":"http://api.weijieyue.cn/api/xiaodaji/api.php?msg=$1"
 		},
 		{
 			"err":"调用失败",
