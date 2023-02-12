@@ -8,14 +8,8 @@
     <artifactId>MiraiCallApiPlugin</artifactId>
     <version>1.0</version>
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>central</id>-->
-<!--            <url>https://maven.aliyun.com/repository/central</url>-->
-<!--        </repository>-->
-<!--    </repositories>-->
     <properties>
-        <mirai-version>2.12.3</mirai-version>
+        <mirai-version>2.14.0</mirai-version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
@@ -43,7 +37,7 @@
         <dependency>
             <groupId>io.github.Kloping</groupId>
             <artifactId>JvUtils</artifactId>
-            <version>0.4.5</version>
+            <version>0.4.7</version>
         </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>
@@ -58,7 +52,7 @@
         <dependency>
             <groupId>io.github.Kloping</groupId>
             <artifactId>SpringTool</artifactId>
-            <version>0.5.5</version>
+            <version>0.5.8</version>
         </dependency>
     </dependencies>
 </project>
