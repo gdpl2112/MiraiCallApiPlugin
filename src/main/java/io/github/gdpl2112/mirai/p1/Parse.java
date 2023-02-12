@@ -22,10 +22,10 @@ import java.util.regex.Pattern;
  * @author github.kloping
  */
 public class Parse {
-    private static final Pattern PATTER_FACE = Pattern.compile("(<Face:\\d+>)");
-    private static final Pattern PATTER_PIC = Pattern.compile("(<Pic:[^>^]+?>)");
+    private static final Pattern PATTER_FACE = Pattern.compile("<Face:\\d+>");
+    private static final Pattern PATTER_PIC = Pattern.compile("<Pic:[^>^]+?>");
     private static final Pattern PATTER_URL = Pattern.compile("<Url:[^>^]+>");
-    private static final Pattern PATTER_AT = Pattern.compile("<At:.*>");
+    private static final Pattern PATTER_AT = Pattern.compile("<At:\\d+>");
     private static final Pattern PATTER_MUSIC = Pattern.compile("<Music:\\d+>");
     private static final Pattern PATTER_VOICE = Pattern.compile("<Audio:.+>");
     public static final Pattern[] PATTERNS = {PATTER_FACE, PATTER_PIC, PATTER_URL, PATTER_AT, PATTER_VOICE, PATTER_MUSIC};
