@@ -75,7 +75,7 @@ public class Converter {
         if (url.contains(GNAME)) {
             Group group = bot.getGroup(gid);
             if (group != null)
-                url = url.replaceAll(MNAME0, group.getName());
+                url = url.replaceAll(GNAME0, group.getName());
         }
         return url;
     }

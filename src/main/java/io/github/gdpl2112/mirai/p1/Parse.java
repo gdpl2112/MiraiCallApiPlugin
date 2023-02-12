@@ -94,10 +94,10 @@ public class Parse {
         }
     }
 
-    public static MessageChain getMessageFromString(String str, Contact group) {
-        if (str == null || str.isEmpty() || group == null) return null;
+    public static MessageChain getMessageFromString(String str, Contact contact) {
+        if (str == null || str.isEmpty() || contact == null) return null;
         MessageChainBuilder builder = new MessageChainBuilder();
-        append(str, builder, group);
+        append(str, builder, contact);
         MessageChain message = builder.build();
         return message;
     }
