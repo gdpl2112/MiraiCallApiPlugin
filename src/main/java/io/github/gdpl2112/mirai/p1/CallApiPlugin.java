@@ -28,6 +28,7 @@ public class CallApiPlugin extends JavaPlugin {
 
     public CallApiPlugin() {
         super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "3.0")
+                .dependsOn("io.github.gdpl2112.lib-tts",  true)
                 .info("调用自定义API插件").build());
     }
 

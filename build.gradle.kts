@@ -11,6 +11,7 @@ version = "3.0"
 
 repositories {
     maven("https://repo1.maven.org/maven2/")
+    mavenLocal()
     mavenCentral()
 }
 
@@ -27,7 +28,7 @@ dependencies {
     testImplementation("org.slf4j:slf4j-simple")
 
     implementation("io.github.Kloping:SpringTool:0.5.8")
-    implementation("io.github.Kloping:spt-web:0.2.0")
+    compileOnly("io.github.Kloping:spt-web:0.2.0")
 }
 
 mirai {

@@ -2,11 +2,11 @@
 
 [下载](https://github.com/gdpl2112/MiraiCallApiPlugin/releases)
 
+### 插件依赖于插件[lib-tts](https://github.com/gdpl2112/lib-tts/releases/)
+
 #### [表达式](./updataLog/expression.md)
 
- ~~**使用前请检查依赖(lib-tts)是否一同添加至plugins 前往 [releases](https://github.com/gdpl2112/lib-tts/) 查找**~~
-
- ~~**使用前请检查JDK版本,目前仅支持11,其他版本可能出现报错或其他位置情况**~~
+###
 
 启动后生成配置文件
 
