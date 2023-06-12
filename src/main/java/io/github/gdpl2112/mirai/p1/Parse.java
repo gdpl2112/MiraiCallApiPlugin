@@ -182,7 +182,7 @@ public class Parse {
             } else if (path.contains(BASE64)) {
                 image = Contact.uploadImage(group, new ByteArrayInputStream(getBase64Data(path)));
             } else if (path.startsWith("[") && path.endsWith("]")) {
-                image = createForwardMessageByPic(group, JSON.parseArray(path).toArray(new String[0]));
+                image = createForwardMessageByPic(group, (String[]) JSON.parseArray(path).toArray(new String[0]));
             } else {
                 image = Contact.uploadImage(group, new File(path));
             }
@@ -225,7 +225,7 @@ public class Parse {
         return null;
     }
 
-    public static Message createForwardMessageByPic(Contact contact, String... picUrl) {
+    public static Message createForwardMessageByPic(Contact contact, String[] picUrl) {
         ForwardMessageBuilder builder = new ForwardMessageBuilder(contact);
         for (String s : picUrl) {
             builder.add(contact.getId(), contact.getBot().getNick(), createImage(contact, s));

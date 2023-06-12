@@ -29,6 +29,9 @@ dependencies {
 
     compileOnly("io.github.Kloping:SpringTool:0.5.8")
     compileOnly("io.github.Kloping:spt-web:0.2.0")
+//
+//    implementation("io.github.Kloping:SpringTool:0.5.8")
+//    implementation("io.github.Kloping:spt-web:0.2.0")
 }
 
 mirai {
