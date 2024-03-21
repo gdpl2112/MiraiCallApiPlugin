@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "io.github.gdpl2112"
-version = "3.2"
+version = "3.3"
 
 repositories {
     maven("https://repo1.maven.org/maven2/")

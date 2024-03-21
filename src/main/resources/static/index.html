@@ -35,7 +35,7 @@
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="inputGroup-outArgs">输出参数</span>
-                    <input placeholder="用,分割参数(英文" type="text" class="form-control"
+                    <input placeholder="用,或;分割参数(英文)" type="text" class="form-control"
                            aria-label="Sizing example input">
                 </div>
                 <div class="input-group mb-3">
@@ -142,7 +142,19 @@
             }, getStrs: function (es) {
                 let s0 = "";
                 for (e0 of es) {
-                    s0 = s0 + "\n" + e0;
+                    s0 = s0 + "\r\n" + e0;
+                }
+                return s0.trim();
+            }, getStrs1: function (es) {
+                let s0 = "";
+                let k = true
+                for (e0 of es) {
+                    if (k) {
+                        s0 = e0;
+                        k = false
+                    } else {
+                        s0 = s0 + "," + e0;
+                    }
                 }
                 return s0.trim();
             }, delete0: function (touch) {
@@ -153,12 +165,11 @@
                 })
             }, ope: function (e) {
                 e_out.val(e.out)
-                e_outArgs.val(this.getStrs(e.outArgs))
+                e_outArgs.val(this.getStrs1(e.outArgs))
                 e_proxy.val(e.proxyIp + ':' + e.proxyPort)
                 e_touch.val(e.touch)
                 e_url.val(e.url)
                 $('#appendModal').modal('show')
-
             }
         }
     });

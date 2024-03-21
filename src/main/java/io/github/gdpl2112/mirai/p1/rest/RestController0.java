@@ -89,7 +89,7 @@ public class RestController0 {
             template.setTouch(touch);
         }
         template.setOut(out);
-        template.setOutArgs(outArgs.split(","));
+        template.setOutArgs(outArgs.split(",|;"));
         template.setUrl(url);
         if (proxy != null && !proxy.isEmpty()) {
             template.setProxyIp(proxy.split(":")[0]);

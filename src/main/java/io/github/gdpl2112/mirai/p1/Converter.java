@@ -104,7 +104,13 @@ public class Converter {
     public static Object get0(String t1, String t0) throws Exception {
         JSON j0 = (JSON) JSON.parse(t1);
         t0 = t0.trim();
-        String s0 = t0.trim().split("\\.")[0].trim();
+        String s0 = null;
+        for (String s : t0.trim().split("\\.")) {
+            if (!s.isEmpty()) {
+                s0 = s;
+                break;
+            }
+        }
         Object o = null;
         if (s0.matches("\\[\\d*]")) {
             JSONArray arr = (JSONArray) j0;
@@ -126,9 +132,8 @@ public class Converter {
             Integer st = Integer.parseInt(s0.substring(i + 1, s0.length() - 1));
             JSONObject jo = (JSONObject) j0;
             o = jo.getJSONArray(st0).get(st);
-            int len = 4 + st0.length();
-            if (t0.length() >= len) t0 = t0.substring(len);
-            else t0 = t0.substring(len - 1);
+            if (t0.length() > s0.length()) t0 = t0.substring(s0.length());
+            else t0 = null;
         } else {
             JSONObject jo = (JSONObject) j0;
             o = jo.get(s0);
@@ -136,7 +141,7 @@ public class Converter {
             if (t0.length() >= len) t0 = t0.substring(len);
             else t0 = t0.substring(len - 1);
         }
-        if (t0.length() > 0) {
+        if (t0 != null && t0.length() > 0) {
             return get0(JSON.toJSONString(o), t0);
         } else {
             return o;
