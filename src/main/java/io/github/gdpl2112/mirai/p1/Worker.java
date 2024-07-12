@@ -133,7 +133,7 @@ public class Worker {
                     try {
                         JSON json = (JSON) JSON.parse(o1);
                     } catch (Exception e) {
-                        o1 = o1.replaceAll(",", ";");
+                        System.err.println("json parse error.");
                     }
                     end = end.replaceFirst(String.format(CHAR0, i++), o1);
                 }
@@ -143,7 +143,7 @@ public class Worker {
         } catch (Exception e) {
             if (e instanceof NullPointerException) {
                 e.printStackTrace();
-            }
+            }else e.printStackTrace();
             if (template.err != null && !template.err.isEmpty()) {
                 end = template.err;
             } else {

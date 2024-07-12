@@ -84,11 +84,11 @@ public class Converter {
         if (t0.equals(ALL)) {
             return ReadUtils.readAll(t1.execute().bodyStream(), "utf-8");
         }
-        if (t0.equals(PAR_URL)) {
-            return t1.get().location();
-        }
         if (doc0.get() == null) {
             doc0.set(t1.get());
+        }
+        if (t0.equals(PAR_URL)) {
+            return doc0.get().location();
         }
         return get0(doc0.get().body().text(), t0);
     }

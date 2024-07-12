@@ -1,25 +1,79 @@
-<!doctype html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="zh-cn">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/css/bootstarp@5.1.3_min.css" rel="stylesheet"
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="/js/libs/axios.js"></script>
+    <script src="/js/libs/vue.js"></script>
+    <script src="/js/libs/jq3.6.js"></script>
+
+    <link href="/css/libs/bootstarp@5.1.3_min.css" rel="stylesheet"
           crossorigin="anonymous">
-    <script src="./js/libs/axios.js"></script>
-    <script src="./js/libs/vue.js"></script>
+    <link rel="stylesheet" href="/css/libs/http_cdn.jsdelivr.net_npm_bootstrap@4.6.2_dist_css_bootstrap.css"
+          crossorigin="anonymous">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "montserrat";
+            background-image: linear-gradient(125deg, #2c3e50, #6fe8ec, #2980b9, #ff5fa2, #8e44ad);
+            background-size: 400%;
+            animation: bganimation 20s infinite;
+        }
+
+        @keyframes bganimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
     <title>API管理界面</title>
 </head>
 <body>
-<br>
-<div style="text-align: center;"><span
-        style="font-size: xxx-large;background-color: #ababab;color: #9900ff">API管理界面</span></div>
-<br>
-<div style="text-align: center;">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#appendModal">
-        添加
+<nav class="navbar navbar-expand-lg navbar-light bg-light tm-0" style="background: rgba(255,255,255,0.8)">
+    <a class="navbar-brand" href="/">
+        <img alt="github"
+             class="navbar-brand" src="http://kloping.top/icon.jpg" style="opacity: 0.86;max-width: 50px; border-radius: 999px"></a>
+    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+            class="navbar-toggler" data-target="#navbarSupportedContent"
+            data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
     </button>
-</div>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <p>自定义调用API<span class="sr-only">(current)</span></p>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://kloping.top/">kloping's web</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://qm.qq.com/q/xRJqMmNbRC">交流群</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">更多功能;敬请期待.</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <a class="dropdown-item" href="https://github.com/gdpl2112/MiraiCallApiPlugin" target="_blank">
+                <img alt="github" loading="lazy" src="https://s.nmxc.ltd/sakurairo_vision/@2.6/display_icon/sora/github.png"
+                     style="opacity: 0.86;max-width: 35px">
+                github 开源地址
+            </a>
+        </form>
+    </div>
+</nav>
 <br>
+<hr>
 <div class="modal fade" id="appendModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -28,14 +82,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
             </div>
             <div class="modal-body">
-
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="inputGroup-out">输出格式</span>
                     <input type="text" class="form-control" aria-label="Sizing example input">
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="inputGroup-outArgs">输出参数</span>
-                    <input placeholder="用,或;分割参数(英文)" type="text" class="form-control"
+                    <input placeholder="用,分割参数(英文)" type="text" class="form-control"
                            aria-label="Sizing example input">
                 </div>
                 <div class="input-group mb-3">
@@ -59,123 +112,150 @@
         </div>
     </div>
 </div>
-<br>
 <div class="container">
     <div class="row">
         <div class="center-block">
-            <table id="table_main" class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">输出格式</th>
-                    <th scope="col">输出参数</th>
-                    <th scope="col">触发词</th>
-                    <th scope="col">地址</th>
-                    <th scope="col">代理</th>
-                    <th scope="col">操作</th>
-                </tr>
-                </thead>
-                <tr v-for="(e) in data">
-                    <th scope="col"><img style="width: 40px;height: 40px;" :src="getFavicon(e)" alt="icon"></th>
-                    <th scope="col" v-text="e.out"></th>
-                    <th scope="col" v-text="getStrs(e.outArgs)"></th>
-                    <th scope="col" v-text="e.touch"></th>
-                    <th scope="col" v-text="e.url"></th>
-                    <th scope="col" v-text="e.proxyIp+':'+e.proxyPort"></th>
-                    <th scope="col">
-                        <button v-on:click="ope(e)" type="button" class="btn btn-primary">操作</button>
-                        <button v-on:click="delete0(e.touch)" type="button" class="btn btn-danger">删除</button>
-                    </th>
-                </tr>
-            </table>
+            <div style="text-align: center;">
+                <button onclick="add0()" type="button" class="btn btn-primary btn-lg btn-block" data-bs-toggle="modal">
+                    添加
+                </button>
+            </div>
+            <br>
+            <hr>
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script>
-    let e_out = $("#inputGroup-out").next();
-    let e_outArgs = $("#inputGroup-outArgs").next();
-    let e_touch = $("#inputGroup-touch").next();
-    let e_url = $("#inputGroup-url").next();
-    let e_proxy = $("#inputGroup-proxy").next();
+<div class="container bg-light">
+    <div class="row">
+        <div id="table_main" class="center-block">
+            <div class="container" style="background: rgba(255,255,255,0.8)">
+                <hr>
+                <div class="row">
+                    <div class="col-8">
+                        <ul class="list-group">
+                            <li class="list-group-item disabled" aria-disabled="true">输出格式</li>
+                            <li class="list-group-item disabled" aria-disabled="true">输出参数</li>
+                            <li class="list-group-item disabled" aria-disabled="true">触发词</li>
+                            <li class="list-group-item disabled" aria-disabled="true">地址</li>
+                            <li class="list-group-item disabled" aria-disabled="true">代理</li>
+                        </ul>
+                    </div>
+                    <div class="col-4">操作</div>
+                </div>
+                <div v-for="(e) in data" :class="getTrClass()+' row'" style="margin-top: 15px;padding-bottom: 10px;padding-top: 10px;ba">
+                    <div class="col-8">
+                        <ul class="list-group">
+                            <li class="list-group-item" style="overflow:scroll;" v-text="e.out">输出格式</li>
+                            <li class="list-group-item" v-text="getStrArgs(e.outArgs)">输出参数</li>
+                            <li class="list-group-item" v-text="e.touch">触发词</li>
+                            <li class="list-group-item" style="overflow:scroll;" v-text="e.url">地址</li>
+                            <li class="list-group-item" style="overflow:scroll;" v-text="e.proxyIp+':'+e.proxyPort">代理</li>
+                        </ul>
+                    </div>
+                    <div class="col-4">
+                        <img class="rounded img-fluid img-responsive" :src="getFavicon(e)"  style="max-width: 90px">
+                        <hr> <button v-on:click="delete0(e.touch)" type="button" class="btn btn-danger col">删除</button>
+                        <hr><button v-on:click="modify0(e)" type="button" class="btn btn-primary col">修改</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        let e_out = $("#inputGroup-out").next();
+        let e_outArgs = $("#inputGroup-outArgs").next();
+        let e_touch = $("#inputGroup-touch").next();
+        let e_url = $("#inputGroup-url").next();
+        let e_proxy = $("#inputGroup-proxy").next();
+        function submit0() {
+            let v1 = encodeURIComponent(e_out.val())
+            let v2 = encodeURIComponent(e_outArgs.val())
+            let v3 = encodeURIComponent(e_touch.val())
+            let v4 = encodeURIComponent(e_url.val())
+            let v5 = encodeURIComponent(e_proxy.val())
+            let url = "/append?out=" + v1
+                    + "&outArgs=" + v2
+                    + "&touch=" + v3
+                    + "&url=" + v4
+                    + "&proxy=" + v5;
 
-    function submit0() {
-        let v1 = encodeURIComponent(e_out.val())
-        let v2 = encodeURIComponent(e_outArgs.val())
-        let v3 = encodeURIComponent(e_touch.val())
-        let v4 = encodeURIComponent(e_url.val())
-        let v5 = encodeURIComponent(e_proxy.val())
-
-        let url = "/append?out=" + v1
-                + "&outArgs=" + v2
-                + "&touch=" + v3
-                + "&url=" + v4
-                + "&proxy=" + v5;
-
-        axios.post(url).then(function (response) {
-            vm1.data = response.data;
-            e_out.val("")
-            e_outArgs.val("")
-            e_proxy.val("")
-            e_touch.val("")
-            e_url.val("")
-        }).catch(function (err) {
-            alert(err);
-        })
-    }
-
-    let vm1 = new Vue({
-        el: "#table_main",
-        created: function () {
-            axios.get("/get_data").then(function (response) {
+            axios.post(url).then(function (response) {
+                trIndex = 0;
                 vm1.data = response.data;
+                e_out.val("")
+                e_outArgs.val("")
+                e_proxy.val("")
+                e_touch.val("")
+                e_url.val("")
             }).catch(function (err) {
                 alert(err);
             })
-        }, data: {
-            data: []
-        }, methods: {
-            getFavicon: function (e) {
-                let u0 = e.url;
-                let i0 = u0.substr(8).indexOf("/")
-                return u0.substr(0, 9 + i0) + "favicon.ico"
-            }, getStrs: function (es) {
-                let s0 = "";
-                for (e0 of es) {
-                    s0 = s0 + "\r\n" + e0;
-                }
-                return s0.trim();
-            }, getStrs1: function (es) {
-                let s0 = "";
-                let k = true
-                for (e0 of es) {
-                    if (k) {
-                        s0 = e0;
-                        k = false
-                    } else {
-                        s0 = s0 + "," + e0;
-                    }
-                }
-                return s0.trim();
-            }, delete0: function (touch) {
-                axios.get("/delete?touch=" + touch).then(function (response) {
+        }
+
+        function add0() {
+            $('#exampleModalLabel').html('添加一个API');
+            $('#appendModal').modal('show')
+            e_out.val("")
+            e_outArgs.val("")
+            e_touch.val("")
+            e_url.val("")
+            e_proxy.val("")
+        }
+
+        let trClasses = ["alert-primary", "alert-secondary", "alert-success", "alert-danger", "alert-warning", "alert-info", "alert-light", "alert-dark"];
+        let trIndex = 0
+
+        let vm1 = new Vue({
+            el: "#table_main",
+            created: function () {
+                axios.get("/get_data").then(function (response) {
+                    trIndex = 0;
                     vm1.data = response.data;
                 }).catch(function (err) {
                     alert(err);
                 })
-            }, ope: function (e) {
-                e_out.val(e.out)
-                e_outArgs.val(this.getStrs1(e.outArgs))
-                e_proxy.val(e.proxyIp + ':' + e.proxyPort)
-                e_touch.val(e.touch)
-                e_url.val(e.url)
-                $('#appendModal').modal('show')
+            }, data: {
+                data: [],
+            }, methods: {
+                getFavicon: function (e) {
+                    let u0 = e.url;
+                    let i0 = u0.substr(8).indexOf("/")
+                    return u0.substr(0, 9 + i0) + "favicon.ico"
+                }, delete0: function (touch) {
+                    axios.get("/delete?touch=" + touch).then(function (response) {
+                        trIndex = 0;
+                        vm1.data = response.data;
+                    }).catch(function (err) {
+                        alert(err);
+                    })
+                }, modify0: function (e) {
+                    e_out.val(e.out)
+                    e_outArgs.val(e.outArgs)
+                    e_touch.val(e.touch)
+                    e_url.val(e.url)
+                    e_proxy.val(e.proxyIp + ':' + e.proxyPort)
+                    $('#exampleModalLabel').html('修改一个API');
+                    $('#appendModal').modal('show')
+                }, getTrClass: function () {
+                    return trClasses[trIndex++ % trClasses.length].toString()
+                }, getStrArgs: function (args) {
+                    let s0 = "";
+                    for (e0 of args) {
+                        s0 = s0 + "\r\n" + e0;
+                    }
+                    return s0.trim();
+                }
             }
-        }
-    });
-</script>
-<script src="./js/index.js"></script>
+        });
+    </script>
+    <br>
+
+<script src="/js/libs/http_cdn.jsdelivr.net_npm_jquery@3.5.1_dist_jquery.slim.min.js" crossorigin="anonymous"></script>
+<script src="/js/libs/http_cdn.jsdelivr.net_npm_bootstrap@4.6.2_dist_js_bootstrap.bundle.js"
+        crossorigin="anonymous"></script>
 <script src="/js/libs/http_cdn.jsdelivr.net_npm_bootstrap@5.1.3_dist_js_bootstrap.bundle.js"
         crossorigin="anonymous"></script>
+<script src="/js/index.js"></script>
 </body>
 </html>
