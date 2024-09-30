@@ -1,5 +1,6 @@
 package io.github.gdpl2112.mirai.p1;
 
+import io.github.gdpl2112.mirai.p1.services.ScriptService;
 import io.github.kloping.initialize.FileInitializeValue;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.console.MiraiConsoleImplementation;
@@ -15,7 +16,6 @@ import net.mamoe.mirai.message.data.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.HashMap;
 
 /**
  * @author github.kloping
@@ -27,7 +27,7 @@ public class CallApiPlugin extends JavaPlugin {
     public static Conf conf = null;
 
     public CallApiPlugin() {
-        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "3.4")
+        super(new JvmPluginDescriptionBuilder("io.github.Kloping.mirai.p1.CallApiPlugin", "3.5")
                 .info("调用自定义API插件").build());
     }
 
@@ -40,6 +40,7 @@ public class CallApiPlugin extends JavaPlugin {
     public void onEnable() {
         super.onEnable();
         loadConf();
+        GlobalEventChannel.INSTANCE.registerListenerHost(new ScriptService());
         GlobalEventChannel.INSTANCE.registerListenerHost(new SimpleListenerHost() {
             @Override
             public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
