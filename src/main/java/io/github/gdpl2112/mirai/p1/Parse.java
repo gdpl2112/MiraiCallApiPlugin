@@ -23,10 +23,10 @@ import java.util.regex.Pattern;
  */
 public class Parse {
     private static final Pattern PATTER_FACE = Pattern.compile("<Face:\\d+>");
-    private static final Pattern PATTER_PIC = Pattern.compile("<Pic:[^>^]+?>");
-    private static final Pattern PATTER_URL = Pattern.compile("<Url:[^>^]+>");
-    private static final Pattern PATTER_AT = Pattern.compile("<At:\\d+>");
-    private static final Pattern PATTER_MUSIC = Pattern.compile("<Music:\\d+>");
+    private static final Pattern PATTER_PIC = Pattern.compile("<Pic:[^>^]+?>|<pic:[^>^]+?>");
+    private static final Pattern PATTER_URL = Pattern.compile("<Url:[^>^]+>|<url:[^>^]+?>");
+    private static final Pattern PATTER_AT = Pattern.compile("<At:\\d+>|<at:\\d+>");
+    private static final Pattern PATTER_MUSIC = Pattern.compile("<Music:\\d+>|<music:\\d+>");
     private static final Pattern PATTER_VOICE = Pattern.compile("<Audio:.+>");
     public static final Pattern[] PATTERNS = {PATTER_FACE, PATTER_PIC, PATTER_URL, PATTER_AT, PATTER_VOICE, PATTER_MUSIC};
 
@@ -114,12 +114,15 @@ public class Parse {
                 String s2 = ss.substring(i1 + 1);
                 switch (s1) {
                     case "Pic":
+                    case "pic":
                         builder.append(createImage(contact, s2));
                         break;
                     case "Face":
+                    case "face":
                         builder.append(getFace(Integer.parseInt(s2)));
                         break;
                     case "At":
+                    case "at":
                         builder.append(getAt(Long.parseLong(s2)));
                         break;
                     case "Voice":
@@ -127,6 +130,7 @@ public class Parse {
                         builder.append(createVoiceMessageInGroup(s2, contact.getId(), contact));
                         break;
                     case "Music":
+                    case "music":
                         builder.append(createMusic(contact, s2));
                         break;
                     default:

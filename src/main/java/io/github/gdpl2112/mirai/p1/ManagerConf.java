@@ -31,8 +31,9 @@ public class ManagerConf {
         Boolean a = query(String.format("SELECT k FROM sw WHERE touch='%s' AND id='%s'", touch, id));
         if (a == null) {
             update(String.format("INSERT INTO sw VALUES ('%s', '%s', %s);", touch, id, k));
+            return k;
         }
-        return k;
+        return a;
     }
 
     public void setStateByTouchAndId(String touch, String id, boolean k) {

@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "io.github.gdpl2112"
-version = "3.5"
+version = "3.5.1"
 
 repositories {
     maven("https://repo1.maven.org/maven2/")
@@ -31,7 +31,7 @@ dependencies {
     testImplementation(kotlin("test"))
 
 //    compileOnly("net.mamoe:mirai-core:2.15.0")
-	testConsoleRuntime("top.mrxiaom:overflow-core:2.16.0-db61867-SNAPSHOT")
+	testConsoleRuntime("top.mrxiaom.mirai:overflow-core:1.0.4")
 //    compileOnly("net.mamoe:mirai-console-compiler-common:2.15.0")
 //    implementation(platform("net.mamoe:mirai-bom:2.15.0"))
 //    testImplementation("net.mamoe:mirai-core-mock:2.15.0")

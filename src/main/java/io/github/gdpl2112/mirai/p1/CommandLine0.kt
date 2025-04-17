@@ -67,4 +67,16 @@ class CommandLine0 private constructor() : JCompositeCommand(CallApiPlugin.INSTA
         sendMessage("当前触发词: '${str}'在id状态为${k}")
     }
 
+    @Description("某一id存在的所有触发词同时操作权限控制")
+    @SubCommand("swAll")
+    suspend fun CommandSender.callApiSwAll(
+        @Name("id") ids: String,
+        @Name("布尔值") k: Boolean
+    ) {
+        for (template in CallApiPlugin.conf.templates) {
+            ManagerConf.INSTANCE.setStateByTouchAndId(template.touch, ids, k)
+        }
+        sendMessage("当前触发词: '${ids}'的触发状态为${k}")
+    }
+
 }
